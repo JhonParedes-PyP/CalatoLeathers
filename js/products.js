@@ -122,5 +122,32 @@ const PRODUCTS_DATA = [
       "Bordes y cantos sellados, pulidos y encerados a mano",
       "Hecho a mano en Perú con insumos seleccionados"
     ]
+  },
+  {
+    id: 5,
+    name: "Billetera Trifold para Mujer con Monedero",
+    category: "billeteras",
+    categoryLabel: "Billeteras de Mujer",
+    price: 130,
+    tag: "Con Monedero • Jhon Paredes",
+    image: "assets/img/billetera-mujer-monedero-cerrada.jpg",
+    gallery: [
+      "assets/img/billetera-mujer-monedero-cerrada.jpg",
+      "assets/img/billetera-mujer-monedero-abierta.jpg"
+    ],
+    shortDesc: "Diseño trifold femenino en cuero vacuno legítimo color miel/caramelo con solapa ondulada, monedero integrado de fuelle y ranuras curvas. Hecha 100% a mano por Jhon Paredes.",
+    fullDesc: "Elegancia, versatilidad y practicidad en una sola pieza de autor. Esta billetera trifold para mujer está diseñada y elaborada íntegramente a mano por el artesano Jhon Paredes utilizando cuero vacuno legítimo de primera calidad en tono caramelo miel con acabado encerado pull-up. Su diseño ergonómico incorpora una solapa exterior de corte ondulado con broche de presión metálico seguro. Al abrirse, despliega tres paneles funcionales: compartimento para tarjetas con ranuras onduladas, un monedero central con solapa para monedas o llaves, y un amplio espacio longitudinal para billetes extendidos.",
+    specs: [
+      "Elaborada 100% a mano por Jhon Paredes • El Artesano",
+      "Cuero vacuno legítimo de grano superior en tono caramelo/miel",
+      "Estructura trifold compacta de 3 paneles de apertura completa",
+      "Monedero central incorporado con solapa propia y broche para monedas y llaves",
+      "3 ranuras curvas anatómicas para tarjetas de acceso rápido",
+      "Compartimento largo superior para billetes extendidos sin doblar",
+      "Cierre principal con broche de presión metálico inoxidable de alta durabilidad",
+      "Costura tradicional a dos agujas (saddle stitch) con hilo encerado resistente",
+      "Cantos biselados, pulidos y sellados a mano con ceras naturales",
+      "Garantía de confección artesanal directa de taller Calato Leathers"
+    ]
   }
 ];
