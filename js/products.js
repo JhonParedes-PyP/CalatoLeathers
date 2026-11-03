@@ -22,7 +22,7 @@ const PRODUCTS_DATA = [
     name: "Billetera Bifold Compacta con Solapa y Broche",
     category: "billeteras",
     categoryLabel: "Billeteras de Hombre",
-    price: 120,
+    price: 118,
     tag: "100% Hecha a Mano • Jhon Paredes",
     image: "assets/img/billetera-bifold-broche-frontal.png",
     gallery: [
@@ -49,7 +49,7 @@ const PRODUCTS_DATA = [
     name: "Billetera Clásica Bifold Cuero Negro",
     category: "billeteras",
     categoryLabel: "Billeteras de Hombre",
-    price: 110,
+    price: 89,
     tag: "Sello Calato en Relieve",
     image: "assets/img/billetera-negra-calato-exterior.jpg",
     gallery: [
