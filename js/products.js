@@ -70,5 +70,57 @@ const PRODUCTS_DATA = [
       "Bordes y cantos biselados, teñidos y sellados a mano",
       "Garantía de cuero 100% auténtico peruano"
     ]
+  },
+  {
+    id: 3,
+    name: "Tarjetero Bifold Vertical Minimalista",
+    category: "tarjeteros",
+    categoryLabel: "Tarjeteros de Cuero",
+    price: 50,
+    tag: "100% Hecho a Mano • Jhon Paredes",
+    image: "assets/img/tarjetero-vertical-cognac.jpg",
+    gallery: [
+      "assets/img/tarjetero-vertical-cognac.jpg"
+    ],
+    shortDesc: "Tarjetero vertical en cuero vacuno pull-up tono cognac con ranuras ergonómicas onduladas y costura a dos agujas en hilo crema. Hecho 100% a mano por Jhon Paredes.",
+    fullDesc: "Máxima practicidad y elegancia en el menor volumen posible. Este tarjetero bifold de orientación vertical está confeccionado artesanalmente a mano por Jhon Paredes con cuero vacuno legítimo de tacto graso / pull-up en tono cognac, que desarrollará una pátina hermosa con el uso diario. Sus ranuras frontales con corte ondulado ergonómico facilitan retirar tus tarjetas de crédito o identificación con suavidad. Cosido punto a punto a mano con técnica tradicional saddle stitch e hilo encerado reforzado.",
+    specs: [
+      "Elaborado 100% a mano por Jhon Paredes • El Artesano",
+      "Cuero vacuno legítimo de primera flor con acabado pull-up color cognac",
+      "Orientación vertical compacta: cabe cómodamente en bolsillo delantero de camisa o pantalón",
+      "4 ranuras ergonómicas con corte en onda para extracción rápida de tarjetas",
+      "2 compartimentos interiores amplios para billetes doblados o tarjetas secundarias",
+      "Capacidad recomendada para 4 a 8 tarjetas y efectivo doblado",
+      "Costura tradicional a dos agujas con hilo encerado grueso en tono crema",
+      "Cantos biselados, bruñidos y sellados a mano con ceras naturales",
+      "Garantía de confección artesanal directa de taller Calato Leathers"
+    ]
+  },
+  {
+    id: 4,
+    name: "Tarjetero Bifold Horizontal Clásico",
+    category: "tarjeteros",
+    categoryLabel: "Tarjeteros de Cuero",
+    price: 50,
+    tag: "Cuero Vacuno Pull-up • Jhon Paredes",
+    image: "assets/img/tarjetero-horizontal-interior.jpg",
+    gallery: [
+      "assets/img/tarjetero-horizontal-interior.jpg",
+      "assets/img/tarjetero-horizontal-exterior.jpg",
+      "assets/img/tarjetero-horizontal-cognac.jpg"
+    ],
+    shortDesc: "Tarjetero horizontal en cuero vacuno pull-up veteado color cognac. Ranuras semicirculares y costura perimetral artesanal a dos agujas por Jhon Paredes.",
+    fullDesc: "Diseño clásico, sobrio y de gran carácter. Elaborado íntegramente a mano por el artesano Jhon Paredes con cuero vacuno auténtico de grano vivo en tono coñac cálido. Su apertura horizontal permite acceso inmediato a tarjetas gracias a sus cortes semicirculares pulidos. El reverso exterior exhibe toda la riqueza natural y el jaspeado del cuero genuino, enmarcado por una sólida costura perimetral a mano con hilo encerado. Delgado, liviano y fabricado para durar toda la vida.",
+    specs: [
+      "Elaborado 100% a mano por Jhon Paredes • El Artesano",
+      "Cuero vacuno auténtico seleccionado con acabado graso y veteado natural",
+      "Orientación bifold horizontal ultraplana",
+      "Ranuras interiores semicirculares para deslizar y retirar tarjetas con el pulgar",
+      "2 bolsillos interiores principales + espacio oculto para billetes doblados",
+      "Capacidad recomendada para 4 a 8 tarjetas y billetes",
+      "Costura perimetral tradicional a dos agujas con hilo encerado marfil",
+      "Bordes y cantos sellados, pulidos y encerados a mano",
+      "Hecho a mano en Perú con insumos seleccionados"
+    ]
   }
 ];
