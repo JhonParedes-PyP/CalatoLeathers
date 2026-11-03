@@ -910,33 +910,83 @@ button {
   align-items: center;
 }
 
-.craft-img-wrapper {
+.craft-dual-wrapper {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 16px;
+  align-items: stretch;
+  padding-bottom: 25px;
+}
+
+.craft-img-card {
   position: relative;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-md);
   border: 1px solid var(--border-color);
+  background: var(--bg-main);
+  transition: var(--transition);
 }
 
-.craft-main-img {
-  width: 100%;
+.craft-img-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--accent);
+}
+
+.craft-img-card.primary {
   height: 480px;
+}
+
+.craft-img-card.secondary {
+  height: 480px;
+}
+
+.craft-leather-img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.craft-img-card:hover .craft-leather-img {
+  transform: scale(1.04);
+}
+
+.craft-img-tag {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: rgba(22, 13, 8, 0.85);
+  backdrop-filter: blur(4px);
+  color: var(--accent-light);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--accent);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .craft-floating-card {
   position: absolute;
-  bottom: 24px;
-  left: 24px;
-  background: rgba(255, 255, 255, 0.95);
+  bottom: 0;
+  left: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.96);
   backdrop-filter: blur(8px);
-  padding: 16px 20px;
+  padding: 14px 20px;
   border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   gap: 14px;
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-lg);
   border-left: 4px solid var(--accent);
+  z-index: 5;
 }
 
 .craft-floating-card i {
@@ -2060,6 +2110,25 @@ button {
   
   .search-box {
     width: 100%;
+  }
+
+  .craft-dual-wrapper {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding-bottom: 0;
+  }
+
+  .craft-img-card.primary,
+  .craft-img-card.secondary {
+    height: 260px;
+  }
+
+  .craft-floating-card {
+    position: static;
+    margin-top: 12px;
+    left: auto;
+    right: auto;
+    bottom: auto;
   }
 }
 

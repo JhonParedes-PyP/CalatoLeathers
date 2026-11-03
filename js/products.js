@@ -6,9 +6,8 @@
 const STORE_CONFIG = {
   storeName: "Calato Leathers",
   artisanName: "Jhon Paredes • El Artesano",
-  // Cambia este número por tu número de WhatsApp real con código de país (51 para Perú)
-  // Ejemplo: 51987654321
-  whatsappNumber: "51900000000",
+  // Número oficial de WhatsApp de Jhon Paredes
+  whatsappNumber: "51915222623",
   currency: "S/",
   // Función para formatear el precio en Soles (ej: 120 -> S/ 120.00)
   formatPrice: function(price) {
