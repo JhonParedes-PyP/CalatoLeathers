@@ -1,6 +1,6 @@
 /* ========================================================
    CALATO LEATHERS - LÓGICA DE APLICACIÓN
-   Pedidos directos a WhatsApp, Paleta de Confección, Galería y Visor
+   Pedidos directos a WhatsApp, Paleta de Confección, Compartir, Galería y Visor
    Artesano: Jhon Paredes • El Artesano
    ======================================================== */
 
@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderProducts();
   setupEventListeners();
   updateFooterYear();
+  checkSharedProductUrl();
 });
 
 // Configurar enlaces telefónicos según STORE_CONFIG
@@ -187,6 +188,9 @@ function renderProducts() {
         <div class="product-thumb">
           <img id="productImg-${product.id}" src="${product.image}" alt="${product.name}" loading="lazy">
           ${product.tag ? `<span class="product-tag">${product.tag}</span>` : ''}
+          <button class="product-share-btn" onclick="shareProduct(${product.id}, event)" title="Compartir este producto" aria-label="Compartir producto">
+            <i class="fa-solid fa-share-nodes"></i>
+          </button>
           <button class="product-quick-view" onclick="openProductModal(${product.id})" title="Ver detalles e imágenes">
             <i class="fa-solid fa-eye"></i>
           </button>
@@ -200,10 +204,15 @@ function renderProducts() {
 
           <div class="product-footer">
             <span class="product-price">${STORE_CONFIG.formatPrice(product.price)}</span>
-            <button class="btn btn-buy-wa" onclick="orderSingleProductWhatsApp(${product.id})" title="Pedir por WhatsApp">
-              <i class="fa-brands fa-whatsapp"></i>
-              <span>Pedir por WhatsApp</span>
-            </button>
+            <div class="product-actions-group">
+              <button class="btn-share-icon" onclick="shareProduct(${product.id}, event)" title="Compartir este producto" aria-label="Compartir">
+                <i class="fa-solid fa-share-nodes"></i>
+              </button>
+              <button class="btn btn-buy-wa" onclick="orderSingleProductWhatsApp(${product.id})" title="Pedir por WhatsApp">
+                <i class="fa-brands fa-whatsapp"></i>
+                <span>Pedir</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -351,6 +360,10 @@ function openProductModal(productId) {
             <i class="fa-brands fa-whatsapp"></i>
             <span>Pedir esta pieza por WhatsApp</span>
           </button>
+          <button class="btn btn-share-modal" onclick="shareProduct(${product.id}, event)">
+            <i class="fa-solid fa-share-nodes"></i>
+            <span>Compartir este producto</span>
+          </button>
         </div>
       </div>
     </div>
@@ -491,6 +504,101 @@ function orderSingleProductWhatsApp(productId) {
 
   const url = `https://wa.me/${STORE_CONFIG.whatsappNumber}?text=${encodeURIComponent(text)}`;
   window.open(url, '_blank');
+}
+
+// ----------------------------------------------------
+// FUNCIÓN COMPARTIR PRODUCTO (NATIVE WEB SHARE & CLIPBOARD)
+// ----------------------------------------------------
+function shareProduct(productId, event) {
+  if (event) {
+    event.stopPropagation();
+    event.preventDefault();
+  }
+
+  const product = PRODUCTS_DATA.find(p => p.id === productId);
+  if (!product) return;
+
+  const origin = window.location.origin;
+  const path = window.location.pathname;
+  const shareUrl = `${origin}${path}?producto=${product.id}`;
+  
+  const shareTitle = `${product.name} • ${STORE_CONFIG.storeName}`;
+  const shareText = `Descubre esta pieza de cuero vacuno legítimo hecha 100% a mano por ${STORE_CONFIG.artisanName}: ${product.name} (${STORE_CONFIG.formatPrice(product.price)}).`;
+
+  if (navigator.share) {
+    navigator.share({
+      title: shareTitle,
+      text: shareText,
+      url: shareUrl
+    }).catch(err => {
+      // Si el usuario no canceló la acción manualmente, copiar enlace
+      if (err.name !== 'AbortError') {
+        copyShareLink(shareUrl, product.name);
+      }
+    });
+  } else {
+    copyShareLink(shareUrl, product.name);
+  }
+}
+
+function copyShareLink(url, productName) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(url).then(() => {
+      showToast(`¡Enlace de "${productName}" copiado! Listo para compartir.`, 'fa-solid fa-link');
+    }).catch(() => {
+      fallbackCopyText(url, productName);
+    });
+  } else {
+    fallbackCopyText(url, productName);
+  }
+}
+
+function fallbackCopyText(text, productName) {
+  const textArea = document.createElement('textarea');
+  textArea.value = text;
+  textArea.style.position = 'fixed';
+  textArea.style.left = '-9999px';
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+  try {
+    document.execCommand('copy');
+    showToast(`¡Enlace copiado al portapapeles! Listo para compartir.`, 'fa-solid fa-link');
+  } catch (err) {
+    showToast(`Enlace: ${text}`, 'fa-solid fa-info-circle');
+  }
+  document.body.removeChild(textArea);
+}
+
+function showToast(message, icon = 'fa-solid fa-check') {
+  const toast = document.getElementById('toast');
+  if (!toast) return;
+  toast.innerHTML = `<i class="${icon}"></i> <span>${message}</span>`;
+  toast.classList.add('show');
+  clearTimeout(toast._timeout);
+  toast._timeout = setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3200);
+}
+
+// Abrir producto directamente si viene por URL compartida (?producto=ID o #producto-ID)
+function checkSharedProductUrl() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const sharedId = urlParams.get('producto') || 
+                   (window.location.hash.startsWith('#producto-') ? window.location.hash.replace('#producto-', '') : null);
+  if (sharedId) {
+    const pId = parseInt(sharedId, 10);
+    const product = PRODUCTS_DATA.find(p => p.id === pId);
+    if (product) {
+      setTimeout(() => {
+        openProductModal(pId);
+        const card = document.querySelector(`.product-card[data-id="${pId}"]`);
+        if (card) {
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 400);
+    }
+  }
 }
 
 // ----------------------------------------------------

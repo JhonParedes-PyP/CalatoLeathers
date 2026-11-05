@@ -145,8 +145,9 @@ function selectProductVariant(productId, variantId, btnEl) {
 
 ---
 
-## 5. Integración con WhatsApp
+## 5. Integración con WhatsApp y Función de Compartir
 
+### WhatsApp:
 - Configurada en `STORE_CONFIG.whatsappNumber = "51915222623"`.
 - Al generar el enlace de compra en `orderSingleProductWhatsApp(productId)`, la función revisa `AppState.selectedVariants[productId]` e inserta los datos de personalización:
 
@@ -161,6 +162,12 @@ Estoy interesado en adquirir la siguiente pieza artesanal de Jhon Paredes:
 
 ¿Tienen disponibilidad y cuáles son los medios de pago para coordinar el envío? ¡Muchas gracias!
 ```
+
+### Función de Compartir Producto (`shareProduct`):
+- Los clientes pueden compartir cualquier producto desde la tarjeta del catálogo o desde el modal detallado mediante el botón de compartir `<i class="fa-solid fa-share-nodes"></i>`.
+- **En dispositivos móviles y navegadores compatibles:** Abre la hoja de compartir nativa del sistema operativo (`navigator.share`) para enviar directamente a WhatsApp, Instagram, Facebook, Telegram, etc.
+- **En computadoras de escritorio:** Copia automáticamente el enlace directo al portapapeles (`navigator.clipboard.writeText`) y muestra una notificación flotante (Toast).
+- **Deep Linking:** El enlace generado tiene la estructura `https://.../?producto=ID`. Al abrirse, la función `checkSharedProductUrl()` detecta el parámetro en la URL, desplaza la página hacia el producto y abre automáticamente su vista detallada en pantalla completa.
 
 ---
 
