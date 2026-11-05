@@ -15,7 +15,7 @@ const STORE_CONFIG = {
   }
 };
 
-/* Catálogo Oficial - Creaciones con Colores Exclusivos */
+/* Catálogo Oficial - Fotos 100% Originales y Paleta de Confección */
 const PRODUCTS_DATA = [
   {
     id: 1,
@@ -27,31 +27,27 @@ const PRODUCTS_DATA = [
     variants: [
       {
         id: "caramelo",
-        name: "Caramelo / Miel (Original)",
+        name: "Caramelo / Miel (Foto Original)",
         hex: "#A85D2A",
-        thread: "Hilo Crema Marfil (Contraste)",
-        image: "assets/img/billetera-bifold-broche-frontal.png"
+        thread: "Hilo Crema Marfil (Contraste)"
       },
       {
         id: "negro",
         name: "Negro Azabache",
         hex: "#1D1A18",
-        thread: "Hilo Crema en Contraste o Hilo Negro",
-        image: "assets/img/billetera-bifold-broche-frontal-negro.png"
+        thread: "Hilo Crema en Contraste o Hilo Negro"
       },
       {
         id: "verde",
         name: "Verde Olivo Oscuro",
         hex: "#2E3D2A",
-        thread: "Hilo Crema Marfil (Contraste)",
-        image: "assets/img/billetera-bifold-broche-frontal-verde.png"
+        thread: "Hilo Crema Marfil (Contraste)"
       },
       {
         id: "azul",
         name: "Azul Marino Profundo",
         hex: "#1A283B",
-        thread: "Hilo Crema en Contraste o Hilo Azul",
-        image: "assets/img/billetera-bifold-broche-frontal-azul.png"
+        thread: "Hilo Crema en Contraste o Hilo Azul"
       }
     ],
     tag: "100% Hecha a Mano • Jhon Paredes",
@@ -65,7 +61,7 @@ const PRODUCTS_DATA = [
     specs: [
       "Elaborada 100% a mano por Jhon Paredes • El Artesano",
       "Cuero vacuno genuino de primera flor con curtido vegetal",
-      "Colores exclusivos: Caramelo original, Negro azabache, Verde olivo oscuro y Azul marino profundo",
+      "Colores disponibles bajo pedido: Caramelo original, Negro azabache, Verde olivo oscuro y Azul marino profundo",
       "Solapa de cierre seguro con broche de presión metálico en latón envejecido",
       "Capacidad interior para 6 a 8 tarjetas y billetes doblados",
       "Costura tradicional a dos agujas (saddle stitch) con hilo encerado resistente",
@@ -84,31 +80,27 @@ const PRODUCTS_DATA = [
     variants: [
       {
         id: "negro",
-        name: "Negro Azabache (Original)",
+        name: "Negro Azabache (Foto Original)",
         hex: "#1D1A18",
-        thread: "Hilo Negro / Crema",
-        image: "assets/img/billetera-negra-calato-exterior.jpg"
+        thread: "Hilo Negro / Crema"
       },
       {
         id: "marron",
         name: "Marrón Cuero Clásico",
         hex: "#5C3A21",
-        thread: "Hilo Crema Marfil",
-        image: "assets/img/billetera-negra-calato-exterior-marron.jpg"
+        thread: "Hilo Crema Marfil"
       },
       {
         id: "verde",
         name: "Verde Olivo Oscuro",
         hex: "#2E3D2A",
-        thread: "Hilo Crema Marfil",
-        image: "assets/img/billetera-negra-calato-exterior-verde.jpg"
+        thread: "Hilo Crema Marfil"
       },
       {
         id: "azul",
         name: "Azul Marino Profundo",
         hex: "#1A283B",
-        thread: "Hilo Crema en Contraste o Hilo Azul",
-        image: "assets/img/billetera-negra-calato-exterior-azul.jpg"
+        thread: "Hilo Crema en Contraste o Hilo Azul"
       }
     ],
     tag: "Sello Calato en Relieve",
@@ -141,31 +133,27 @@ const PRODUCTS_DATA = [
     variants: [
       {
         id: "cognac",
-        name: "Coñac / Whiskey Vintage (Original)",
+        name: "Coñac / Whiskey Vintage (Foto Original)",
         hex: "#C66827",
-        thread: "Hilo Crema Grueso",
-        image: "assets/img/tarjetero-vertical-cognac.jpg"
+        thread: "Hilo Crema Grueso"
       },
       {
         id: "negro",
         name: "Negro Azabache",
         hex: "#1D1A18",
-        thread: "Hilo Crema en Contraste o Hilo Negro",
-        image: "assets/img/tarjetero-vertical-negro.jpg"
+        thread: "Hilo Crema en Contraste o Hilo Negro"
       },
       {
         id: "verde",
         name: "Verde Olivo Oscuro",
         hex: "#2E3D2A",
-        thread: "Hilo Crema Marfil",
-        image: "assets/img/tarjetero-vertical-verde.jpg"
+        thread: "Hilo Crema Marfil"
       },
       {
         id: "azul",
         name: "Azul Marino Profundo",
         hex: "#1A283B",
-        thread: "Hilo Crema en Contraste o Hilo Azul",
-        image: "assets/img/tarjetero-vertical-azul.jpg"
+        thread: "Hilo Crema en Contraste o Hilo Azul"
       }
     ],
     tag: "100% Hecho a Mano • Jhon Paredes",
@@ -196,31 +184,27 @@ const PRODUCTS_DATA = [
     variants: [
       {
         id: "cognac",
-        name: "Coñac / Whiskey Vintage (Original)",
+        name: "Coñac / Whiskey Vintage (Foto Original)",
         hex: "#C66827",
-        thread: "Hilo Crema Grueso",
-        image: "assets/img/tarjetero-horizontal-interior.jpg"
+        thread: "Hilo Crema Grueso"
       },
       {
         id: "negro",
         name: "Negro Azabache",
         hex: "#1D1A18",
-        thread: "Hilo Crema en Contraste o Hilo Negro",
-        image: "assets/img/tarjetero-horizontal-negro.jpg"
+        thread: "Hilo Crema en Contraste o Hilo Negro"
       },
       {
         id: "verde",
         name: "Verde Olivo Oscuro",
         hex: "#2E3D2A",
-        thread: "Hilo Crema Marfil",
-        image: "assets/img/tarjetero-horizontal-verde.jpg"
+        thread: "Hilo Crema Marfil"
       },
       {
         id: "azul",
         name: "Azul Marino Profundo",
         hex: "#1A283B",
-        thread: "Hilo Crema en Contraste o Hilo Azul",
-        image: "assets/img/tarjetero-horizontal-azul.jpg"
+        thread: "Hilo Crema en Contraste o Hilo Azul"
       }
     ],
     tag: "Cuero Vacuno Pull-up • Jhon Paredes",
@@ -253,31 +237,27 @@ const PRODUCTS_DATA = [
     variants: [
       {
         id: "caramelo",
-        name: "Caramelo / Miel (Original)",
+        name: "Caramelo / Miel (Foto Original)",
         hex: "#A85D2A",
-        thread: "Hilo Crema Marfil (Contraste)",
-        image: "assets/img/billetera-mujer-monedero-cerrada.jpg"
+        thread: "Hilo Crema Marfil (Contraste)"
       },
       {
         id: "negro",
         name: "Negro Azabache",
         hex: "#1D1A18",
-        thread: "Hilo Crema en Contraste o Hilo Negro",
-        image: "assets/img/billetera-mujer-monedero-negro.jpg"
+        thread: "Hilo Crema en Contraste o Hilo Negro"
       },
       {
         id: "verde",
         name: "Verde Olivo Oscuro",
         hex: "#2E3D2A",
-        thread: "Hilo Crema Marfil",
-        image: "assets/img/billetera-mujer-monedero-verde.jpg"
+        thread: "Hilo Crema Marfil"
       },
       {
         id: "azul",
         name: "Azul Marino Profundo",
         hex: "#1A283B",
-        thread: "Hilo Crema en Contraste o Hilo Azul",
-        image: "assets/img/billetera-mujer-monedero-azul.jpg"
+        thread: "Hilo Crema en Contraste o Hilo Azul"
       }
     ],
     tag: "Con Monedero • Jhon Paredes",
@@ -310,31 +290,27 @@ const PRODUCTS_DATA = [
     variants: [
       {
         id: "chocolate",
-        name: "Marrón Chocolate Profundo (Original)",
+        name: "Marrón Chocolate Profundo (Foto Original)",
         hex: "#422415",
-        thread: "Hilo Tostado / Café",
-        image: "assets/img/monedero-calato-1.jpg"
+        thread: "Hilo Tostado / Café"
       },
       {
         id: "negro",
         name: "Negro Azabache",
         hex: "#1D1A18",
-        thread: "Hilo Crema en Contraste o Hilo Negro",
-        image: "assets/img/monedero-calato-negro.jpg"
+        thread: "Hilo Crema en Contraste o Hilo Negro"
       },
       {
         id: "verde",
         name: "Verde Olivo Oscuro",
         hex: "#2E3D2A",
-        thread: "Hilo Crema Marfil",
-        image: "assets/img/monedero-calato-verde.jpg"
+        thread: "Hilo Crema Marfil"
       },
       {
         id: "azul",
         name: "Azul Marino Profundo",
         hex: "#1A283B",
-        thread: "Hilo Crema en Contraste o Hilo Azul",
-        image: "assets/img/monedero-calato-azul.jpg"
+        thread: "Hilo Crema en Contraste o Hilo Azul"
       }
     ],
     tag: "100% Hecho a Mano • Jhon Paredes",

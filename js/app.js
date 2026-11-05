@@ -1,6 +1,6 @@
 /* ========================================================
    CALATO LEATHERS - LÓGICA DE APLICACIÓN
-   Pedidos directos a WhatsApp, Variantes de Color Reales, Galería y Visor
+   Pedidos directos a WhatsApp, Paleta de Confección, Galería y Visor
    Artesano: Jhon Paredes • El Artesano
    ======================================================== */
 
@@ -125,7 +125,7 @@ function setupEventListeners() {
 }
 
 // ----------------------------------------------------
-// RENDERIZADO DE PRODUCTOS
+// RENDERIZADO DE PRODUCTOS (FOTOS 100% ORIGINALES)
 // ----------------------------------------------------
 function renderProducts() {
   const grid = document.getElementById('productsGrid');
@@ -150,20 +150,15 @@ function renderProducts() {
 
   grid.innerHTML = filtered.map(product => {
     let variantsHtml = '';
-    let currentImage = product.image;
 
     if (product.variants && product.variants.length > 0) {
       const activeVariantId = AppState.selectedVariants[product.id] || product.variants[0].id;
       const activeVariant = product.variants.find(v => v.id === activeVariantId) || product.variants[0];
-      if (activeVariant.image) {
-        currentImage = activeVariant.image;
-      }
 
       variantsHtml = `
         <div class="product-variants" onclick="event.stopPropagation()">
           <div class="variants-header">
-            <span class="variants-title"><i class="fa-solid fa-palette"></i> Colores de cuero:</span>
-            <span class="variants-hint">Elige un color</span>
+            <span class="variants-title"><i class="fa-solid fa-palette"></i> Colores para confección:</span>
           </div>
           <div class="variant-swatches">
             ${product.variants.map(v => `
@@ -181,7 +176,7 @@ function renderProducts() {
           </div>
           <div class="variant-info" id="variantInfo-${product.id}">
             <span class="variant-leather">Cuero: ${activeVariant.name}</span>
-            <span class="variant-thread"><i class="fa-solid fa-grip-lines"></i> ${activeVariant.thread}</span>
+            <span class="variant-thread"><i class="fa-solid fa-grip-lines"></i> Costura: ${activeVariant.thread}</span>
           </div>
         </div>
       `;
@@ -190,7 +185,7 @@ function renderProducts() {
     return `
       <div class="product-card" data-id="${product.id}">
         <div class="product-thumb">
-          <img id="productImg-${product.id}" src="${currentImage}" alt="${product.name}" loading="lazy">
+          <img id="productImg-${product.id}" src="${product.image}" alt="${product.name}" loading="lazy">
           ${product.tag ? `<span class="product-tag">${product.tag}</span>` : ''}
           <button class="product-quick-view" onclick="openProductModal(${product.id})" title="Ver detalles e imágenes">
             <i class="fa-solid fa-eye"></i>
@@ -217,7 +212,7 @@ function renderProducts() {
 }
 
 // ----------------------------------------------------
-// SELECCIÓN DE VARIANTE DE COLOR (CAMBIA LA IMAGEN REAL)
+// SELECCIÓN DE VARIANTE DE COLOR (LA FOTO ORIGINAL SE MANTIENE)
 // ----------------------------------------------------
 function selectProductVariant(productId, variantId, btnEl) {
   const product = PRODUCTS_DATA.find(p => p.id === productId);
@@ -228,7 +223,7 @@ function selectProductVariant(productId, variantId, btnEl) {
 
   AppState.selectedVariants[productId] = variantId;
 
-  // 1. Actualizar la tarjeta del producto
+  // 1. Actualizar la tarjeta del producto (solo swatches y texto informativo)
   const card = document.querySelector(`.product-card[data-id="${productId}"]`);
   if (card) {
     const swatches = card.querySelectorAll('.variant-swatch');
@@ -236,36 +231,18 @@ function selectProductVariant(productId, variantId, btnEl) {
       s.classList.toggle('active', s.dataset.variantId === variantId);
     });
 
-    // Cambiar la imagen del producto suavemente
-    const img = card.querySelector('.product-thumb img');
-    if (img && variant.image && img.getAttribute('src') !== variant.image) {
-      img.style.opacity = '0.35';
-      setTimeout(() => {
-        img.src = variant.image;
-        img.style.opacity = '1';
-      }, 100);
-    }
-
     const info = card.querySelector(`#variantInfo-${productId}`);
     if (info) {
       info.innerHTML = `
         <span class="variant-leather">Cuero: ${variant.name}</span>
-        <span class="variant-thread"><i class="fa-solid fa-grip-lines"></i> ${variant.thread}</span>
+        <span class="variant-thread"><i class="fa-solid fa-grip-lines"></i> Costura: ${variant.thread}</span>
       `;
     }
   }
 
-  // 2. Si el modal está abierto para este producto, sincronizar la imagen y swatches
+  // 2. Si el modal está abierto para este producto, sincronizar swatches y texto
   const modal = document.getElementById('productModal');
   if (modal && modal.classList.contains('active') && AppState.selectedProduct && AppState.selectedProduct.id === productId) {
-    const modalImg = document.getElementById('modalMainImg');
-    if (modalImg && variant.image && modalImg.getAttribute('src') !== variant.image) {
-      modalImg.style.opacity = '0.35';
-      setTimeout(() => {
-        modalImg.src = variant.image;
-        modalImg.style.opacity = '1';
-      }, 100);
-    }
     const modalSwatches = modal.querySelectorAll('.variant-swatch');
     modalSwatches.forEach(s => {
       s.classList.toggle('active', s.dataset.variantId === variantId);
@@ -274,7 +251,7 @@ function selectProductVariant(productId, variantId, btnEl) {
     if (modalInfo) {
       modalInfo.innerHTML = `
         <span class="variant-leather">Cuero: ${variant.name}</span>
-        <span class="variant-thread"><i class="fa-solid fa-grip-lines"></i> ${variant.thread}</span>
+        <span class="variant-thread"><i class="fa-solid fa-grip-lines"></i> Costura: ${variant.thread}</span>
       `;
     }
   }
@@ -321,14 +298,10 @@ function openProductModal(productId) {
     : '';
 
   let variantsModalHtml = '';
-  let initialModalImg = product.image;
 
   if (product.variants && product.variants.length > 0) {
     const activeVariantId = AppState.selectedVariants[product.id] || product.variants[0].id;
     const activeVariant = product.variants.find(v => v.id === activeVariantId) || product.variants[0];
-    if (activeVariant.image) {
-      initialModalImg = activeVariant.image;
-    }
 
     variantsModalHtml = `
       <div class="modal-variants">
@@ -351,7 +324,7 @@ function openProductModal(productId) {
         </div>
         <div class="variant-info" id="modalVariantInfo-${product.id}">
           <span class="variant-leather">Cuero: ${activeVariant.name}</span>
-          <span class="variant-thread"><i class="fa-solid fa-grip-lines"></i> ${activeVariant.thread}</span>
+          <span class="variant-thread"><i class="fa-solid fa-grip-lines"></i> Costura: ${activeVariant.thread}</span>
         </div>
       </div>
     `;
@@ -361,7 +334,7 @@ function openProductModal(productId) {
     <div class="modal-grid">
       <div class="modal-image-col">
         <div class="modal-main-img-box" onclick="openLightboxFromModal()" title="Hacer clic para ver foto completa en pantalla grande">
-          <img id="modalMainImg" src="${initialModalImg}" alt="${product.name}">
+          <img id="modalMainImg" src="${product.image}" alt="${product.name}">
           <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Pantalla completa</span>
         </div>
         ${galleryThumbs}
@@ -422,10 +395,6 @@ function openLightboxFromModal() {
   const gallery = AppState.selectedProduct.gallery && AppState.selectedProduct.gallery.length > 0
     ? [...AppState.selectedProduct.gallery]
     : [AppState.selectedProduct.image];
-
-  if (!gallery.includes(currentSrc)) {
-    gallery.unshift(currentSrc);
-  }
 
   let idx = gallery.findIndex(img => currentSrc.includes(img) || img.includes(currentSrc));
   if (idx === -1) idx = 0;
@@ -508,7 +477,7 @@ function orderSingleProductWhatsApp(productId) {
     const selectedId = AppState.selectedVariants[productId] || product.variants[0].id;
     const variant = product.variants.find(v => v.id === selectedId);
     if (variant) {
-      variantDetails = `🎨 *Color de Cuero:* ${variant.name}\n` +
+      variantDetails = `🎨 *Color de Cuero Solicitado:* ${variant.name}\n` +
                        `🧵 *Costura:* ${variant.thread}\n`;
     }
   }
