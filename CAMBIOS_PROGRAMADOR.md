@@ -96,10 +96,12 @@ Cada producto en el arreglo `PRODUCTS_DATA` tiene una estructura como esta:
 ```
 
 ### Paleta estándar de cueros Calato:
-1. **Caramelo / Miel:** `#A85D2A`
-2. **Negro Azabache:** `#1D1A18`
-3. **Marrón Chocolate Profundo:** `#422415`
-4. **Coñac / Whiskey Vintage:** `#C66827`
+1. **Marrón Original de cada pieza:** Tono natural artesanal de la fotografía (Caramelo/Miel, Coñac Vintage o Chocolate Profundo).
+2. **Negro Azabache:** `#1D1A18` — Elegante, sobrio con costura en hilo crema marfil o hilo negro.
+3. **Verde Olivo Oscuro:** `#2E3D2A` — Verde bosque/olivo profundo de autor, con costura en contraste marfil.
+4. **Azul Marino Profundo:** `#1A283B` — Azul medianoche exclusivo, acabado prémium.
+
+> **Nota técnica de renderizado:** Las imágenes de variantes aplican filtros de protección de tono de piel humana (`IsSkin`), asegurando que las manos del artesano que sostienen los productos (tarjeteros, monederos, billeteras) permanezcan 100% naturales con su color de piel original intacto.
 
 ---
 
