@@ -23,6 +23,36 @@ const PRODUCTS_DATA = [
     category: "billeteras",
     categoryLabel: "Billeteras de Hombre",
     price: 118,
+    variants: [
+      {
+        id: "caramelo",
+        name: "Caramelo / Miel (Original)",
+        hex: "#A85D2A",
+        thread: "Hilo Crema Marfil (Contraste)",
+        filter: "none"
+      },
+      {
+        id: "negro",
+        name: "Negro Azabache",
+        hex: "#1D1A18",
+        thread: "Hilo Crema en Contraste o Hilo Negro",
+        filter: "grayscale(100%) brightness(0.68) contrast(1.18)"
+      },
+      {
+        id: "chocolate",
+        name: "Marrón Chocolate Profundo",
+        hex: "#422415",
+        thread: "Hilo Tostado / Café",
+        filter: "sepia(0.6) hue-rotate(-25deg) saturate(1.1) brightness(0.65) contrast(1.1)"
+      },
+      {
+        id: "cognac",
+        name: "Coñac / Whiskey Vintage",
+        hex: "#C66827",
+        thread: "Hilo Crema Grueso",
+        filter: "sepia(0.3) hue-rotate(-8deg) saturate(1.55) brightness(0.92) contrast(1.08)"
+      }
+    ],
     tag: "100% Hecha a Mano • Jhon Paredes",
     image: "assets/img/billetera-bifold-broche-frontal.png",
     gallery: [

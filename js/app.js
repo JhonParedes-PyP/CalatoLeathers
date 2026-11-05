@@ -9,6 +9,7 @@ const AppState = {
   currentCategory: 'todos',
   searchQuery: '',
   selectedProduct: null,
+  selectedVariants: {}, // { [productId]: variantId }
   lightboxGallery: [],
   lightboxIndex: 0,
   lightboxTitle: ''
@@ -147,31 +148,127 @@ function renderProducts() {
 
   if (noResults) noResults.style.display = 'none';
 
-  grid.innerHTML = filtered.map(product => `
-    <div class="product-card" data-id="${product.id}">
-      <div class="product-thumb">
-        <img src="${product.image}" alt="${product.name}" loading="lazy">
-        ${product.tag ? `<span class="product-tag">${product.tag}</span>` : ''}
-        <button class="product-quick-view" onclick="openProductModal(${product.id})" title="Ver detalles e imágenes">
-          <i class="fa-solid fa-eye"></i>
-        </button>
-      </div>
+  grid.innerHTML = filtered.map(product => {
+    let variantsHtml = '';
+    let initialFilter = 'none';
 
-      <div class="product-body">
-        <span class="product-category">${product.categoryLabel}</span>
-        <h3 class="product-name">${product.name}</h3>
-        <p class="product-desc">${product.shortDesc}</p>
+    if (product.variants && product.variants.length > 0) {
+      const activeVariantId = AppState.selectedVariants[product.id] || product.variants[0].id;
+      const activeVariant = product.variants.find(v => v.id === activeVariantId) || product.variants[0];
+      initialFilter = activeVariant.filter;
 
-        <div class="product-footer">
-          <span class="product-price">${STORE_CONFIG.formatPrice(product.price)}</span>
-          <button class="btn btn-buy-wa" onclick="orderSingleProductWhatsApp(${product.id})" title="Pedir por WhatsApp">
-            <i class="fa-brands fa-whatsapp"></i>
-            <span>Pedir por WhatsApp</span>
+      variantsHtml = `
+        <div class="product-variants" onclick="event.stopPropagation()">
+          <div class="variants-header">
+            <span class="variants-title"><i class="fa-solid fa-palette"></i> Colores de cuero:</span>
+            <span class="variants-hint">Toca para cambiar</span>
+          </div>
+          <div class="variant-swatches">
+            ${product.variants.map(v => `
+              <button 
+                type="button" 
+                class="variant-swatch ${v.id === activeVariant.id ? 'active' : ''}" 
+                style="--swatch-color: ${v.hex};" 
+                data-product-id="${product.id}"
+                data-variant-id="${v.id}"
+                onclick="selectProductVariant(${product.id}, '${v.id}', this)"
+                title="${v.name} • ${v.thread}"
+                aria-label="${v.name}">
+              </button>
+            `).join('')}
+          </div>
+          <div class="variant-info" id="variantInfo-${product.id}">
+            <span class="variant-leather">Cuero: ${activeVariant.name}</span>
+            <span class="variant-thread"><i class="fa-solid fa-grip-lines"></i> ${activeVariant.thread}</span>
+          </div>
+        </div>
+      `;
+    }
+
+    return `
+      <div class="product-card" data-id="${product.id}">
+        <div class="product-thumb">
+          <img id="productImg-${product.id}" src="${product.image}" alt="${product.name}" loading="lazy" style="filter: ${initialFilter};">
+          ${product.tag ? `<span class="product-tag">${product.tag}</span>` : ''}
+          <button class="product-quick-view" onclick="openProductModal(${product.id})" title="Ver detalles e imágenes">
+            <i class="fa-solid fa-eye"></i>
           </button>
         </div>
+
+        <div class="product-body">
+          <span class="product-category">${product.categoryLabel}</span>
+          <h3 class="product-name">${product.name}</h3>
+          <p class="product-desc">${product.shortDesc}</p>
+          ${variantsHtml}
+
+          <div class="product-footer">
+            <span class="product-price">${STORE_CONFIG.formatPrice(product.price)}</span>
+            <button class="btn btn-buy-wa" onclick="orderSingleProductWhatsApp(${product.id})" title="Pedir por WhatsApp">
+              <i class="fa-brands fa-whatsapp"></i>
+              <span>Pedir por WhatsApp</span>
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
+}
+
+// ----------------------------------------------------
+// SELECCIÓN DE VARIANTE DE COLOR
+// ----------------------------------------------------
+function selectProductVariant(productId, variantId, btnEl) {
+  const product = PRODUCTS_DATA.find(p => p.id === productId);
+  if (!product || !product.variants) return;
+
+  const variant = product.variants.find(v => v.id === variantId);
+  if (!variant) return;
+
+  AppState.selectedVariants[productId] = variantId;
+
+  // 1. Actualizar en la tarjeta del producto
+  const card = document.querySelector(`.product-card[data-id="${productId}"]`);
+  if (card) {
+    const swatches = card.querySelectorAll('.variant-swatch');
+    swatches.forEach(s => {
+      if (s.dataset.variantId === variantId) s.classList.add('active');
+      else s.classList.remove('active');
+    });
+
+    const img = card.querySelector('.product-thumb img');
+    if (img) {
+      img.style.filter = variant.filter;
+    }
+
+    const info = card.querySelector(`#variantInfo-${productId}`);
+    if (info) {
+      info.innerHTML = `
+        <span class="variant-leather">Cuero: ${variant.name}</span>
+        <span class="variant-thread"><i class="fa-solid fa-grip-lines"></i> ${variant.thread}</span>
+      `;
+    }
+  }
+
+  // 2. Si el modal está abierto para este producto, sincronizar el modal también
+  const modal = document.getElementById('productModal');
+  if (modal && modal.classList.contains('active') && AppState.selectedProduct && AppState.selectedProduct.id === productId) {
+    const modalImg = document.getElementById('modalMainImg');
+    if (modalImg) {
+      modalImg.style.filter = variant.filter;
+    }
+    const modalSwatches = modal.querySelectorAll('.variant-swatch');
+    modalSwatches.forEach(s => {
+      if (s.dataset.variantId === variantId) s.classList.add('active');
+      else s.classList.remove('active');
+    });
+    const modalInfo = modal.querySelector(`#modalVariantInfo-${productId}`);
+    if (modalInfo) {
+      modalInfo.innerHTML = `
+        <span class="variant-leather">Cuero: ${variant.name}</span>
+        <span class="variant-thread"><i class="fa-solid fa-grip-lines"></i> ${variant.thread}</span>
+      `;
+    }
+  }
 }
 
 function resetFilters() {
@@ -214,11 +311,46 @@ function openProductModal(productId) {
        </div>`
     : '';
 
+  let variantsModalHtml = '';
+  let initialModalFilter = 'none';
+
+  if (product.variants && product.variants.length > 0) {
+    const activeVariantId = AppState.selectedVariants[product.id] || product.variants[0].id;
+    const activeVariant = product.variants.find(v => v.id === activeVariantId) || product.variants[0];
+    initialModalFilter = activeVariant.filter;
+
+    variantsModalHtml = `
+      <div class="modal-variants">
+        <div class="variants-header">
+          <span class="variants-title"><i class="fa-solid fa-palette"></i> Selecciona tu combinación de cuero y costura:</span>
+        </div>
+        <div class="variant-swatches">
+          ${product.variants.map(v => `
+            <button 
+              type="button" 
+              class="variant-swatch ${v.id === activeVariant.id ? 'active' : ''}" 
+              style="--swatch-color: ${v.hex};" 
+              data-product-id="${product.id}"
+              data-variant-id="${v.id}"
+              onclick="selectProductVariant(${product.id}, '${v.id}', this)"
+              title="${v.name} • ${v.thread}"
+              aria-label="${v.name}">
+            </button>
+          `).join('')}
+        </div>
+        <div class="variant-info" id="modalVariantInfo-${product.id}">
+          <span class="variant-leather">Cuero: ${activeVariant.name}</span>
+          <span class="variant-thread"><i class="fa-solid fa-grip-lines"></i> ${activeVariant.thread}</span>
+        </div>
+      </div>
+    `;
+  }
+
   details.innerHTML = `
     <div class="modal-grid">
       <div class="modal-image-col">
         <div class="modal-main-img-box" onclick="openLightboxFromModal()" title="Hacer clic para ver foto completa en pantalla grande">
-          <img id="modalMainImg" src="${product.image}" alt="${product.name}">
+          <img id="modalMainImg" src="${product.image}" alt="${product.name}" style="filter: ${initialModalFilter};">
           <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Pantalla completa</span>
         </div>
         ${galleryThumbs}
@@ -228,6 +360,7 @@ function openProductModal(productId) {
         <h2 class="modal-title">${product.name}</h2>
         <div class="modal-price">${STORE_CONFIG.formatPrice(product.price)}</div>
         <p class="modal-description">${product.fullDesc || product.shortDesc}</p>
+        ${variantsModalHtml}
         ${specsList}
         <div class="modal-actions">
           <button class="btn btn-buy-wa-large" onclick="orderSingleProductWhatsApp(${product.id})">
@@ -354,11 +487,22 @@ function orderSingleProductWhatsApp(productId) {
   const product = PRODUCTS_DATA.find(p => p.id === productId);
   if (!product) return;
 
+  let variantDetails = '';
+  if (product.variants && product.variants.length > 0) {
+    const selectedId = AppState.selectedVariants[productId] || product.variants[0].id;
+    const variant = product.variants.find(v => v.id === selectedId);
+    if (variant) {
+      variantDetails = `🎨 *Color de Cuero:* ${variant.name}\n` +
+                       `🧵 *Costura:* ${variant.thread}\n`;
+    }
+  }
+
   const text = `¡Hola ${STORE_CONFIG.storeName}! 👋\n\n` +
                `Estoy interesado en adquirir la siguiente pieza artesanal de Jhon Paredes:\n` +
                `🔸 *${product.name}*\n` +
+               (variantDetails ? variantDetails : '') +
                `💰 *Precio:* ${STORE_CONFIG.formatPrice(product.price)}\n\n` +
-               `¿Tienen disponibilidad inmediata y cuáles son los medios de pago para coordinar el envío? ¡Muchas gracias!`;
+               `¿Tienen disponibilidad y cuáles son los medios de pago para coordinar el envío? ¡Muchas gracias!`;
 
   const url = `https://wa.me/${STORE_CONFIG.whatsappNumber}?text=${encodeURIComponent(text)}`;
   window.open(url, '_blank');
