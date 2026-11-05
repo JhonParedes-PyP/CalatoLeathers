@@ -15,15 +15,7 @@ const STORE_CONFIG = {
   }
 };
 
-/* Paleta de colores de cuero disponibles (compartida entre productos) */
-const LEATHER_COLORS = {
-  caramelo: { id: "caramelo", name: "Caramelo / Miel", hex: "#A85D2A", thread: "Hilo Crema Marfil (Contraste)" },
-  negro:    { id: "negro",    name: "Negro Azabache",  hex: "#1D1A18", thread: "Hilo Crema en Contraste o Hilo Negro" },
-  chocolate:{ id: "chocolate", name: "Marrón Chocolate Profundo", hex: "#422415", thread: "Hilo Tostado / Café" },
-  cognac:   { id: "cognac",   name: "Coñac / Whiskey Vintage",   hex: "#C66827", thread: "Hilo Crema Grueso" }
-};
-
-/* Catálogo Oficial - Solo Creaciones Originales */
+/* Catálogo Oficial - Creaciones Originales con Variantes Reales */
 const PRODUCTS_DATA = [
   {
     id: 1,
@@ -31,14 +23,38 @@ const PRODUCTS_DATA = [
     category: "billeteras",
     categoryLabel: "Billeteras de Hombre",
     price: 118,
+    image: "assets/img/billetera-bifold-broche-frontal.png",
     variants: [
-      { ...LEATHER_COLORS.caramelo, name: "Caramelo / Miel (Original)" },
-      { ...LEATHER_COLORS.negro },
-      { ...LEATHER_COLORS.chocolate },
-      { ...LEATHER_COLORS.cognac }
+      {
+        id: "caramelo",
+        name: "Caramelo / Miel (Original)",
+        hex: "#A85D2A",
+        thread: "Hilo Crema Marfil (Contraste)",
+        image: "assets/img/billetera-bifold-broche-frontal.png"
+      },
+      {
+        id: "negro",
+        name: "Negro Azabache",
+        hex: "#1D1A18",
+        thread: "Hilo Crema en Contraste o Hilo Negro",
+        image: "assets/img/billetera-bifold-broche-frontal-negro.png"
+      },
+      {
+        id: "chocolate",
+        name: "Marrón Chocolate Profundo",
+        hex: "#422415",
+        thread: "Hilo Tostado / Café",
+        image: "assets/img/billetera-bifold-broche-frontal-chocolate.png"
+      },
+      {
+        id: "cognac",
+        name: "Coñac / Whiskey Vintage",
+        hex: "#C66827",
+        thread: "Hilo Crema Grueso",
+        image: "assets/img/billetera-bifold-broche-frontal-cognac.png"
+      }
     ],
     tag: "100% Hecha a Mano • Jhon Paredes",
-    image: "assets/img/billetera-bifold-broche-frontal.png",
     gallery: [
       "assets/img/billetera-bifold-broche-frontal.png",
       "assets/img/billetera-bifold-broche-abierta.png",
@@ -64,14 +80,38 @@ const PRODUCTS_DATA = [
     category: "billeteras",
     categoryLabel: "Billeteras de Hombre",
     price: 89,
+    image: "assets/img/billetera-negra-calato-exterior.jpg",
     variants: [
-      { ...LEATHER_COLORS.negro, name: "Negro Azabache (Original)" },
-      { ...LEATHER_COLORS.chocolate },
-      { ...LEATHER_COLORS.caramelo },
-      { ...LEATHER_COLORS.cognac }
+      {
+        id: "negro",
+        name: "Negro Azabache (Original)",
+        hex: "#1D1A18",
+        thread: "Hilo Negro / Crema",
+        image: "assets/img/billetera-negra-calato-exterior.jpg"
+      },
+      {
+        id: "chocolate",
+        name: "Marrón Chocolate Profundo",
+        hex: "#422415",
+        thread: "Hilo Tostado / Café",
+        image: "assets/img/billetera-negra-calato-exterior-chocolate.jpg"
+      },
+      {
+        id: "caramelo",
+        name: "Caramelo / Miel",
+        hex: "#A85D2A",
+        thread: "Hilo Crema Marfil (Contraste)",
+        image: "assets/img/billetera-negra-calato-exterior-caramelo.jpg"
+      },
+      {
+        id: "cognac",
+        name: "Coñac / Whiskey Vintage",
+        hex: "#C66827",
+        thread: "Hilo Crema Grueso",
+        image: "assets/img/billetera-negra-calato-exterior-cognac.jpg"
+      }
     ],
     tag: "Sello Calato en Relieve",
-    image: "assets/img/billetera-negra-calato-exterior.jpg",
     gallery: [
       "assets/img/billetera-negra-calato-exterior.jpg",
       "assets/img/billetera-negra-calato-interior.jpg"
@@ -97,14 +137,38 @@ const PRODUCTS_DATA = [
     category: "tarjeteros",
     categoryLabel: "Tarjeteros de Cuero",
     price: 50,
+    image: "assets/img/tarjetero-vertical-cognac.jpg",
     variants: [
-      { ...LEATHER_COLORS.cognac, name: "Coñac / Whiskey Vintage (Original)" },
-      { ...LEATHER_COLORS.negro },
-      { ...LEATHER_COLORS.chocolate },
-      { ...LEATHER_COLORS.caramelo }
+      {
+        id: "cognac",
+        name: "Coñac / Whiskey Vintage (Original)",
+        hex: "#C66827",
+        thread: "Hilo Crema Grueso",
+        image: "assets/img/tarjetero-vertical-cognac.jpg"
+      },
+      {
+        id: "negro",
+        name: "Negro Azabache",
+        hex: "#1D1A18",
+        thread: "Hilo Crema en Contraste o Hilo Negro",
+        image: "assets/img/tarjetero-vertical-negro.jpg"
+      },
+      {
+        id: "chocolate",
+        name: "Marrón Chocolate Profundo",
+        hex: "#422415",
+        thread: "Hilo Tostado / Café",
+        image: "assets/img/tarjetero-vertical-chocolate.jpg"
+      },
+      {
+        id: "caramelo",
+        name: "Caramelo / Miel",
+        hex: "#A85D2A",
+        thread: "Hilo Crema Marfil (Contraste)",
+        image: "assets/img/tarjetero-vertical-caramelo.jpg"
+      }
     ],
     tag: "100% Hecho a Mano • Jhon Paredes",
-    image: "assets/img/tarjetero-vertical-cognac.jpg",
     gallery: [
       "assets/img/tarjetero-vertical-cognac.jpg"
     ],
@@ -128,14 +192,38 @@ const PRODUCTS_DATA = [
     category: "tarjeteros",
     categoryLabel: "Tarjeteros de Cuero",
     price: 50,
+    image: "assets/img/tarjetero-horizontal-interior.jpg",
     variants: [
-      { ...LEATHER_COLORS.cognac, name: "Coñac / Whiskey Vintage (Original)" },
-      { ...LEATHER_COLORS.negro },
-      { ...LEATHER_COLORS.chocolate },
-      { ...LEATHER_COLORS.caramelo }
+      {
+        id: "cognac",
+        name: "Coñac / Whiskey Vintage (Original)",
+        hex: "#C66827",
+        thread: "Hilo Crema Grueso",
+        image: "assets/img/tarjetero-horizontal-interior.jpg"
+      },
+      {
+        id: "negro",
+        name: "Negro Azabache",
+        hex: "#1D1A18",
+        thread: "Hilo Crema en Contraste o Hilo Negro",
+        image: "assets/img/tarjetero-horizontal-negro.jpg"
+      },
+      {
+        id: "chocolate",
+        name: "Marrón Chocolate Profundo",
+        hex: "#422415",
+        thread: "Hilo Tostado / Café",
+        image: "assets/img/tarjetero-horizontal-chocolate.jpg"
+      },
+      {
+        id: "caramelo",
+        name: "Caramelo / Miel",
+        hex: "#A85D2A",
+        thread: "Hilo Crema Marfil (Contraste)",
+        image: "assets/img/tarjetero-horizontal-caramelo.jpg"
+      }
     ],
     tag: "Cuero Vacuno Pull-up • Jhon Paredes",
-    image: "assets/img/tarjetero-horizontal-interior.jpg",
     gallery: [
       "assets/img/tarjetero-horizontal-interior.jpg",
       "assets/img/tarjetero-horizontal-exterior.jpg",
@@ -161,14 +249,38 @@ const PRODUCTS_DATA = [
     category: "billeteras",
     categoryLabel: "Billeteras de Mujer",
     price: 130,
+    image: "assets/img/billetera-mujer-monedero-cerrada.jpg",
     variants: [
-      { ...LEATHER_COLORS.caramelo, name: "Caramelo / Miel (Original)" },
-      { ...LEATHER_COLORS.negro },
-      { ...LEATHER_COLORS.chocolate },
-      { ...LEATHER_COLORS.cognac }
+      {
+        id: "caramelo",
+        name: "Caramelo / Miel (Original)",
+        hex: "#A85D2A",
+        thread: "Hilo Crema Marfil (Contraste)",
+        image: "assets/img/billetera-mujer-monedero-cerrada.jpg"
+      },
+      {
+        id: "negro",
+        name: "Negro Azabache",
+        hex: "#1D1A18",
+        thread: "Hilo Crema en Contraste o Hilo Negro",
+        image: "assets/img/billetera-mujer-monedero-negro.jpg"
+      },
+      {
+        id: "chocolate",
+        name: "Marrón Chocolate Profundo",
+        hex: "#422415",
+        thread: "Hilo Tostado / Café",
+        image: "assets/img/billetera-mujer-monedero-chocolate.jpg"
+      },
+      {
+        id: "cognac",
+        name: "Coñac / Whiskey Vintage",
+        hex: "#C66827",
+        thread: "Hilo Crema Grueso",
+        image: "assets/img/billetera-mujer-monedero-cognac.jpg"
+      }
     ],
     tag: "Con Monedero • Jhon Paredes",
-    image: "assets/img/billetera-mujer-monedero-cerrada.jpg",
     gallery: [
       "assets/img/billetera-mujer-monedero-cerrada.jpg",
       "assets/img/billetera-mujer-monedero-abierta.jpg"
@@ -194,14 +306,38 @@ const PRODUCTS_DATA = [
     category: "monederos",
     categoryLabel: "Monederos de Cuero",
     price: 18,
+    image: "assets/img/monedero-calato-1.jpg",
     variants: [
-      { ...LEATHER_COLORS.chocolate, name: "Marrón Chocolate Profundo (Original)" },
-      { ...LEATHER_COLORS.negro },
-      { ...LEATHER_COLORS.caramelo },
-      { ...LEATHER_COLORS.cognac }
+      {
+        id: "chocolate",
+        name: "Marrón Chocolate Profundo (Original)",
+        hex: "#422415",
+        thread: "Hilo Tostado / Café",
+        image: "assets/img/monedero-calato-1.jpg"
+      },
+      {
+        id: "negro",
+        name: "Negro Azabache",
+        hex: "#1D1A18",
+        thread: "Hilo Crema en Contraste o Hilo Negro",
+        image: "assets/img/monedero-calato-negro.jpg"
+      },
+      {
+        id: "caramelo",
+        name: "Caramelo / Miel",
+        hex: "#A85D2A",
+        thread: "Hilo Crema Marfil (Contraste)",
+        image: "assets/img/monedero-calato-caramelo.jpg"
+      },
+      {
+        id: "cognac",
+        name: "Coñac / Whiskey Vintage",
+        hex: "#C66827",
+        thread: "Hilo Crema Grueso",
+        image: "assets/img/monedero-calato-cognac.jpg"
+      }
     ],
     tag: "100% Hecho a Mano • Jhon Paredes",
-    image: "assets/img/monedero-calato-1.jpg",
     gallery: [
       "assets/img/monedero-calato-1.jpg",
       "assets/img/monedero-calato-2.jpg",

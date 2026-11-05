@@ -1,6 +1,6 @@
 /* ========================================================
    CALATO LEATHERS - LÓGICA DE APLICACIÓN
-   Pedidos directos a WhatsApp, Galería, Búsqueda y Visor Pantalla Completa
+   Pedidos directos a WhatsApp, Variantes de Color Reales, Galería y Visor
    Artesano: Jhon Paredes • El Artesano
    ======================================================== */
 
@@ -150,15 +150,20 @@ function renderProducts() {
 
   grid.innerHTML = filtered.map(product => {
     let variantsHtml = '';
+    let currentImage = product.image;
 
     if (product.variants && product.variants.length > 0) {
       const activeVariantId = AppState.selectedVariants[product.id] || product.variants[0].id;
       const activeVariant = product.variants.find(v => v.id === activeVariantId) || product.variants[0];
+      if (activeVariant.image) {
+        currentImage = activeVariant.image;
+      }
 
       variantsHtml = `
         <div class="product-variants" onclick="event.stopPropagation()">
           <div class="variants-header">
-            <span class="variants-title"><i class="fa-solid fa-palette"></i> Personaliza tu color:</span>
+            <span class="variants-title"><i class="fa-solid fa-palette"></i> Colores de cuero:</span>
+            <span class="variants-hint">Elige un color</span>
           </div>
           <div class="variant-swatches">
             ${product.variants.map(v => `
@@ -178,7 +183,6 @@ function renderProducts() {
             <span class="variant-leather">Cuero: ${activeVariant.name}</span>
             <span class="variant-thread"><i class="fa-solid fa-grip-lines"></i> ${activeVariant.thread}</span>
           </div>
-          <span class="variant-custom-note"><i class="fa-solid fa-paintbrush"></i> Disponible por encargo en el color que elijas</span>
         </div>
       `;
     }
@@ -186,7 +190,7 @@ function renderProducts() {
     return `
       <div class="product-card" data-id="${product.id}">
         <div class="product-thumb">
-          <img id="productImg-${product.id}" src="${product.image}" alt="${product.name}" loading="lazy">
+          <img id="productImg-${product.id}" src="${currentImage}" alt="${product.name}" loading="lazy">
           ${product.tag ? `<span class="product-tag">${product.tag}</span>` : ''}
           <button class="product-quick-view" onclick="openProductModal(${product.id})" title="Ver detalles e imágenes">
             <i class="fa-solid fa-eye"></i>
@@ -213,7 +217,7 @@ function renderProducts() {
 }
 
 // ----------------------------------------------------
-// SELECCIÓN DE VARIANTE DE COLOR (sin filtros de imagen)
+// SELECCIÓN DE VARIANTE DE COLOR (CAMBIA LA IMAGEN REAL)
 // ----------------------------------------------------
 function selectProductVariant(productId, variantId, btnEl) {
   const product = PRODUCTS_DATA.find(p => p.id === productId);
@@ -224,14 +228,23 @@ function selectProductVariant(productId, variantId, btnEl) {
 
   AppState.selectedVariants[productId] = variantId;
 
-  // 1. Actualizar en la tarjeta del producto
+  // 1. Actualizar la tarjeta del producto
   const card = document.querySelector(`.product-card[data-id="${productId}"]`);
   if (card) {
     const swatches = card.querySelectorAll('.variant-swatch');
     swatches.forEach(s => {
-      if (s.dataset.variantId === variantId) s.classList.add('active');
-      else s.classList.remove('active');
+      s.classList.toggle('active', s.dataset.variantId === variantId);
     });
+
+    // Cambiar la imagen del producto suavemente
+    const img = card.querySelector('.product-thumb img');
+    if (img && variant.image && img.getAttribute('src') !== variant.image) {
+      img.style.opacity = '0.35';
+      setTimeout(() => {
+        img.src = variant.image;
+        img.style.opacity = '1';
+      }, 100);
+    }
 
     const info = card.querySelector(`#variantInfo-${productId}`);
     if (info) {
@@ -242,13 +255,20 @@ function selectProductVariant(productId, variantId, btnEl) {
     }
   }
 
-  // 2. Si el modal está abierto para este producto, sincronizar el modal también
+  // 2. Si el modal está abierto para este producto, sincronizar la imagen y swatches
   const modal = document.getElementById('productModal');
   if (modal && modal.classList.contains('active') && AppState.selectedProduct && AppState.selectedProduct.id === productId) {
+    const modalImg = document.getElementById('modalMainImg');
+    if (modalImg && variant.image && modalImg.getAttribute('src') !== variant.image) {
+      modalImg.style.opacity = '0.35';
+      setTimeout(() => {
+        modalImg.src = variant.image;
+        modalImg.style.opacity = '1';
+      }, 100);
+    }
     const modalSwatches = modal.querySelectorAll('.variant-swatch');
     modalSwatches.forEach(s => {
-      if (s.dataset.variantId === variantId) s.classList.add('active');
-      else s.classList.remove('active');
+      s.classList.toggle('active', s.dataset.variantId === variantId);
     });
     const modalInfo = modal.querySelector(`#modalVariantInfo-${productId}`);
     if (modalInfo) {
@@ -301,15 +321,19 @@ function openProductModal(productId) {
     : '';
 
   let variantsModalHtml = '';
+  let initialModalImg = product.image;
 
   if (product.variants && product.variants.length > 0) {
     const activeVariantId = AppState.selectedVariants[product.id] || product.variants[0].id;
     const activeVariant = product.variants.find(v => v.id === activeVariantId) || product.variants[0];
+    if (activeVariant.image) {
+      initialModalImg = activeVariant.image;
+    }
 
     variantsModalHtml = `
       <div class="modal-variants">
         <div class="variants-header">
-          <span class="variants-title"><i class="fa-solid fa-palette"></i> Personaliza tu combinación de cuero y costura:</span>
+          <span class="variants-title"><i class="fa-solid fa-palette"></i> Selecciona tu combinación de cuero y costura:</span>
         </div>
         <div class="variant-swatches">
           ${product.variants.map(v => `
@@ -329,7 +353,6 @@ function openProductModal(productId) {
           <span class="variant-leather">Cuero: ${activeVariant.name}</span>
           <span class="variant-thread"><i class="fa-solid fa-grip-lines"></i> ${activeVariant.thread}</span>
         </div>
-        <span class="variant-custom-note"><i class="fa-solid fa-paintbrush"></i> Disponible por encargo en el color que elijas. La foto es referencial.</span>
       </div>
     `;
   }
@@ -338,7 +361,7 @@ function openProductModal(productId) {
     <div class="modal-grid">
       <div class="modal-image-col">
         <div class="modal-main-img-box" onclick="openLightboxFromModal()" title="Hacer clic para ver foto completa en pantalla grande">
-          <img id="modalMainImg" src="${product.image}" alt="${product.name}">
+          <img id="modalMainImg" src="${initialModalImg}" alt="${product.name}">
           <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Pantalla completa</span>
         </div>
         ${galleryThumbs}
@@ -368,11 +391,11 @@ function openProductModal(productId) {
 function changeModalImage(src, btnEl) {
   const mainImg = document.getElementById('modalMainImg');
   if (mainImg) {
-    mainImg.style.opacity = '0.3';
+    mainImg.style.opacity = '0.35';
     setTimeout(() => {
       mainImg.src = src;
       mainImg.style.opacity = '1';
-    }, 120);
+    }, 100);
   }
   document.querySelectorAll('.gallery-thumb-btn').forEach(b => b.classList.remove('active'));
   if (btnEl) btnEl.classList.add('active');
@@ -392,13 +415,18 @@ function closeProductModal() {
 // ----------------------------------------------------
 function openLightboxFromModal() {
   if (!AppState.selectedProduct) return;
+  
+  const mainImg = document.getElementById('modalMainImg');
+  const currentSrc = mainImg ? mainImg.getAttribute('src') : AppState.selectedProduct.image;
+  
   const gallery = AppState.selectedProduct.gallery && AppState.selectedProduct.gallery.length > 0
-    ? AppState.selectedProduct.gallery
+    ? [...AppState.selectedProduct.gallery]
     : [AppState.selectedProduct.image];
 
-  const mainImg = document.getElementById('modalMainImg');
-  const currentSrc = mainImg ? mainImg.getAttribute('src') : gallery[0];
-  
+  if (!gallery.includes(currentSrc)) {
+    gallery.unshift(currentSrc);
+  }
+
   let idx = gallery.findIndex(img => currentSrc.includes(img) || img.includes(currentSrc));
   if (idx === -1) idx = 0;
 
@@ -447,11 +475,11 @@ function navigateLightbox(dir) {
   const caption = document.getElementById('lightboxCaption');
 
   if (img) {
-    img.style.opacity = '0.3';
+    img.style.opacity = '0.35';
     setTimeout(() => {
       img.src = AppState.lightboxGallery[AppState.lightboxIndex];
       img.style.opacity = '1';
-    }, 120);
+    }, 100);
   }
   if (caption) {
     caption.textContent = `${AppState.lightboxTitle} • Foto ${AppState.lightboxIndex + 1} de ${AppState.lightboxGallery.length} (Pulsa Esc para cerrar)`;
