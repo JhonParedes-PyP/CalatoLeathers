@@ -149,5 +149,32 @@ const PRODUCTS_DATA = [
       "Cantos biselados, pulidos y sellados a mano con ceras naturales",
       "Garantía de confección artesanal directa de taller Calato Leathers"
     ]
+  },
+  {
+    id: 6,
+    name: "Monedero Calato",
+    category: "monederos",
+    categoryLabel: "Monederos de Cuero",
+    price: 18,
+    tag: "100% Hecho a Mano • Jhon Paredes",
+    image: "assets/img/monedero-calato-1.jpg",
+    gallery: [
+      "assets/img/monedero-calato-1.jpg",
+      "assets/img/monedero-calato-2.jpg",
+      "assets/img/monedero-calato-3.jpg",
+      "assets/img/monedero-calato-4.jpg"
+    ],
+    shortDesc: "Monedero de bolsillo en cuero genuino vacuno color chocolate con sello oficial Calato y broche de presión en latón envejecido. Elaborado 100% a mano por Jhon Paredes • El Artesano.",
+    fullDesc: "Accesorio compacto, resistente y práctico para el día a día. Elaborado íntegramente a mano por el artesano Jhon Paredes en cuero genuino vacuno de primera flor en tono café chocolate. Cuenta con una solapa triangular con el sello oficial 'CALATO' grabado a presión y broche metálico en latón antiguo para un cierre seguro. Sus laterales están cosidos punto a punto a mano con hilo encerado reforzado y cantos pulidos con ceras naturales.",
+    specs: [
+      "Elaborado 100% a mano por Jhon Paredes • El Artesano",
+      "Cuero genuino vacuno de primera flor en tono chocolate",
+      "Sello oficial 'CALATO' grabado en bajo relieve en la tapa",
+      "Cierre seguro con broche de presión metálico en latón envejecido",
+      "Costura artesanal lateral a dos agujas con hilo encerado de alta resistencia",
+      "Cantos biselados, pulidos y sellados a mano",
+      "Tamaño de bolsillo ultracompacto para monedas, billetes doblados o llaves",
+      "Garantía de confección artesanal directa de taller Calato Leathers"
+    ]
   }
 ];
