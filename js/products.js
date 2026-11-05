@@ -15,6 +15,14 @@ const STORE_CONFIG = {
   }
 };
 
+/* Paleta de colores de cuero disponibles (compartida entre productos) */
+const LEATHER_COLORS = {
+  caramelo: { id: "caramelo", name: "Caramelo / Miel", hex: "#A85D2A", thread: "Hilo Crema Marfil (Contraste)" },
+  negro:    { id: "negro",    name: "Negro Azabache",  hex: "#1D1A18", thread: "Hilo Crema en Contraste o Hilo Negro" },
+  chocolate:{ id: "chocolate", name: "Marrón Chocolate Profundo", hex: "#422415", thread: "Hilo Tostado / Café" },
+  cognac:   { id: "cognac",   name: "Coñac / Whiskey Vintage",   hex: "#C66827", thread: "Hilo Crema Grueso" }
+};
+
 /* Catálogo Oficial - Solo Creaciones Originales */
 const PRODUCTS_DATA = [
   {
@@ -24,34 +32,10 @@ const PRODUCTS_DATA = [
     categoryLabel: "Billeteras de Hombre",
     price: 118,
     variants: [
-      {
-        id: "caramelo",
-        name: "Caramelo / Miel (Original)",
-        hex: "#A85D2A",
-        thread: "Hilo Crema Marfil (Contraste)",
-        filter: "none"
-      },
-      {
-        id: "negro",
-        name: "Negro Azabache",
-        hex: "#1D1A18",
-        thread: "Hilo Crema en Contraste o Hilo Negro",
-        filter: "grayscale(100%) brightness(0.68) contrast(1.18)"
-      },
-      {
-        id: "chocolate",
-        name: "Marrón Chocolate Profundo",
-        hex: "#422415",
-        thread: "Hilo Tostado / Café",
-        filter: "sepia(0.6) hue-rotate(-25deg) saturate(1.1) brightness(0.65) contrast(1.1)"
-      },
-      {
-        id: "cognac",
-        name: "Coñac / Whiskey Vintage",
-        hex: "#C66827",
-        thread: "Hilo Crema Grueso",
-        filter: "sepia(0.3) hue-rotate(-8deg) saturate(1.55) brightness(0.92) contrast(1.08)"
-      }
+      { ...LEATHER_COLORS.caramelo, name: "Caramelo / Miel (Original)" },
+      { ...LEATHER_COLORS.negro },
+      { ...LEATHER_COLORS.chocolate },
+      { ...LEATHER_COLORS.cognac }
     ],
     tag: "100% Hecha a Mano • Jhon Paredes",
     image: "assets/img/billetera-bifold-broche-frontal.png",
@@ -80,6 +64,12 @@ const PRODUCTS_DATA = [
     category: "billeteras",
     categoryLabel: "Billeteras de Hombre",
     price: 89,
+    variants: [
+      { ...LEATHER_COLORS.negro, name: "Negro Azabache (Original)" },
+      { ...LEATHER_COLORS.chocolate },
+      { ...LEATHER_COLORS.caramelo },
+      { ...LEATHER_COLORS.cognac }
+    ],
     tag: "Sello Calato en Relieve",
     image: "assets/img/billetera-negra-calato-exterior.jpg",
     gallery: [
@@ -107,6 +97,12 @@ const PRODUCTS_DATA = [
     category: "tarjeteros",
     categoryLabel: "Tarjeteros de Cuero",
     price: 50,
+    variants: [
+      { ...LEATHER_COLORS.cognac, name: "Coñac / Whiskey Vintage (Original)" },
+      { ...LEATHER_COLORS.negro },
+      { ...LEATHER_COLORS.chocolate },
+      { ...LEATHER_COLORS.caramelo }
+    ],
     tag: "100% Hecho a Mano • Jhon Paredes",
     image: "assets/img/tarjetero-vertical-cognac.jpg",
     gallery: [
@@ -132,6 +128,12 @@ const PRODUCTS_DATA = [
     category: "tarjeteros",
     categoryLabel: "Tarjeteros de Cuero",
     price: 50,
+    variants: [
+      { ...LEATHER_COLORS.cognac, name: "Coñac / Whiskey Vintage (Original)" },
+      { ...LEATHER_COLORS.negro },
+      { ...LEATHER_COLORS.chocolate },
+      { ...LEATHER_COLORS.caramelo }
+    ],
     tag: "Cuero Vacuno Pull-up • Jhon Paredes",
     image: "assets/img/tarjetero-horizontal-interior.jpg",
     gallery: [
@@ -159,6 +161,12 @@ const PRODUCTS_DATA = [
     category: "billeteras",
     categoryLabel: "Billeteras de Mujer",
     price: 130,
+    variants: [
+      { ...LEATHER_COLORS.caramelo, name: "Caramelo / Miel (Original)" },
+      { ...LEATHER_COLORS.negro },
+      { ...LEATHER_COLORS.chocolate },
+      { ...LEATHER_COLORS.cognac }
+    ],
     tag: "Con Monedero • Jhon Paredes",
     image: "assets/img/billetera-mujer-monedero-cerrada.jpg",
     gallery: [
@@ -186,6 +194,12 @@ const PRODUCTS_DATA = [
     category: "monederos",
     categoryLabel: "Monederos de Cuero",
     price: 18,
+    variants: [
+      { ...LEATHER_COLORS.chocolate, name: "Marrón Chocolate Profundo (Original)" },
+      { ...LEATHER_COLORS.negro },
+      { ...LEATHER_COLORS.caramelo },
+      { ...LEATHER_COLORS.cognac }
+    ],
     tag: "100% Hecho a Mano • Jhon Paredes",
     image: "assets/img/monedero-calato-1.jpg",
     gallery: [

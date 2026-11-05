@@ -150,18 +150,15 @@ function renderProducts() {
 
   grid.innerHTML = filtered.map(product => {
     let variantsHtml = '';
-    let initialFilter = 'none';
 
     if (product.variants && product.variants.length > 0) {
       const activeVariantId = AppState.selectedVariants[product.id] || product.variants[0].id;
       const activeVariant = product.variants.find(v => v.id === activeVariantId) || product.variants[0];
-      initialFilter = activeVariant.filter;
 
       variantsHtml = `
         <div class="product-variants" onclick="event.stopPropagation()">
           <div class="variants-header">
-            <span class="variants-title"><i class="fa-solid fa-palette"></i> Colores de cuero:</span>
-            <span class="variants-hint">Toca para cambiar</span>
+            <span class="variants-title"><i class="fa-solid fa-palette"></i> Personaliza tu color:</span>
           </div>
           <div class="variant-swatches">
             ${product.variants.map(v => `
@@ -181,6 +178,7 @@ function renderProducts() {
             <span class="variant-leather">Cuero: ${activeVariant.name}</span>
             <span class="variant-thread"><i class="fa-solid fa-grip-lines"></i> ${activeVariant.thread}</span>
           </div>
+          <span class="variant-custom-note"><i class="fa-solid fa-paintbrush"></i> Disponible por encargo en el color que elijas</span>
         </div>
       `;
     }
@@ -188,7 +186,7 @@ function renderProducts() {
     return `
       <div class="product-card" data-id="${product.id}">
         <div class="product-thumb">
-          <img id="productImg-${product.id}" src="${product.image}" alt="${product.name}" loading="lazy" style="filter: ${initialFilter};">
+          <img id="productImg-${product.id}" src="${product.image}" alt="${product.name}" loading="lazy">
           ${product.tag ? `<span class="product-tag">${product.tag}</span>` : ''}
           <button class="product-quick-view" onclick="openProductModal(${product.id})" title="Ver detalles e imágenes">
             <i class="fa-solid fa-eye"></i>
@@ -215,7 +213,7 @@ function renderProducts() {
 }
 
 // ----------------------------------------------------
-// SELECCIÓN DE VARIANTE DE COLOR
+// SELECCIÓN DE VARIANTE DE COLOR (sin filtros de imagen)
 // ----------------------------------------------------
 function selectProductVariant(productId, variantId, btnEl) {
   const product = PRODUCTS_DATA.find(p => p.id === productId);
@@ -235,11 +233,6 @@ function selectProductVariant(productId, variantId, btnEl) {
       else s.classList.remove('active');
     });
 
-    const img = card.querySelector('.product-thumb img');
-    if (img) {
-      img.style.filter = variant.filter;
-    }
-
     const info = card.querySelector(`#variantInfo-${productId}`);
     if (info) {
       info.innerHTML = `
@@ -252,10 +245,6 @@ function selectProductVariant(productId, variantId, btnEl) {
   // 2. Si el modal está abierto para este producto, sincronizar el modal también
   const modal = document.getElementById('productModal');
   if (modal && modal.classList.contains('active') && AppState.selectedProduct && AppState.selectedProduct.id === productId) {
-    const modalImg = document.getElementById('modalMainImg');
-    if (modalImg) {
-      modalImg.style.filter = variant.filter;
-    }
     const modalSwatches = modal.querySelectorAll('.variant-swatch');
     modalSwatches.forEach(s => {
       if (s.dataset.variantId === variantId) s.classList.add('active');
@@ -312,17 +301,15 @@ function openProductModal(productId) {
     : '';
 
   let variantsModalHtml = '';
-  let initialModalFilter = 'none';
 
   if (product.variants && product.variants.length > 0) {
     const activeVariantId = AppState.selectedVariants[product.id] || product.variants[0].id;
     const activeVariant = product.variants.find(v => v.id === activeVariantId) || product.variants[0];
-    initialModalFilter = activeVariant.filter;
 
     variantsModalHtml = `
       <div class="modal-variants">
         <div class="variants-header">
-          <span class="variants-title"><i class="fa-solid fa-palette"></i> Selecciona tu combinación de cuero y costura:</span>
+          <span class="variants-title"><i class="fa-solid fa-palette"></i> Personaliza tu combinación de cuero y costura:</span>
         </div>
         <div class="variant-swatches">
           ${product.variants.map(v => `
@@ -342,6 +329,7 @@ function openProductModal(productId) {
           <span class="variant-leather">Cuero: ${activeVariant.name}</span>
           <span class="variant-thread"><i class="fa-solid fa-grip-lines"></i> ${activeVariant.thread}</span>
         </div>
+        <span class="variant-custom-note"><i class="fa-solid fa-paintbrush"></i> Disponible por encargo en el color que elijas. La foto es referencial.</span>
       </div>
     `;
   }
@@ -350,7 +338,7 @@ function openProductModal(productId) {
     <div class="modal-grid">
       <div class="modal-image-col">
         <div class="modal-main-img-box" onclick="openLightboxFromModal()" title="Hacer clic para ver foto completa en pantalla grande">
-          <img id="modalMainImg" src="${product.image}" alt="${product.name}" style="filter: ${initialModalFilter};">
+          <img id="modalMainImg" src="${product.image}" alt="${product.name}">
           <span class="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Pantalla completa</span>
         </div>
         ${galleryThumbs}
