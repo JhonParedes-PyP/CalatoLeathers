@@ -163,25 +163,38 @@ Estoy interesado en adquirir la siguiente pieza artesanal de Jhon Paredes:
 ¿Tienen disponibilidad y cuáles son los medios de pago para coordinar el envío? ¡Muchas gracias!
 ```
 
-### Función de Compartir Producto con Enlaces Amigables (`shareProduct`):
+### Función de Compartir Producto y Vistas Previas en WhatsApp (`shareProduct`):
 - Los clientes pueden compartir cualquier producto desde la tarjeta del catálogo o desde el modal detallado mediante el botón de compartir `<i class="fa-solid fa-share-nodes"></i>`.
-- **En dispositivos móviles y navegadores compatibles:** Abre la hoja de compartir nativa del sistema operativo (`navigator.share`) para enviar directamente a WhatsApp, Instagram, Facebook, Telegram, etc.
+- **En dispositivos móviles:** Abre la hoja de compartir nativa (`navigator.share`) para enviar directamente a WhatsApp, Instagram, etc.
 - **En computadoras de escritorio:** Copia automáticamente el enlace directo al portapapeles (`navigator.clipboard.writeText`) y muestra una notificación flotante (Toast).
-- **Enlaces amigables con Slug (URL semántica):**
-  Cada producto en `PRODUCTS_DATA` cuenta con una propiedad `slug` amigable (ej. `monedero-calato`, `billetera-bifold-broche`, `tarjetero-vertical`).
-  El enlace generado por defecto es:
-  `https://jhonparedes-pyp.github.io/CalatoLeathers/?producto=monedero-calato`
+
+#### Manejo de Previews en Redes Sociales (Open Graph sin Emblema):
+1. **Sin Emblema en la Página Principal (`index.html`):**
+   Se removieron las etiquetas `og:image` y `twitter:image` de `index.html` para evitar que aparezca el logotipo circular (el perro) al compartir enlaces genéricos o con parámetros query. Al compartir enlaces como:
+   `https://jhonparedes-pyp.github.io/CalatoLeathers/?producto=monedero-calato`
+   WhatsApp genera una tarjeta de **SOLO DESCRIPCIÓN** (texto limpio, sin recuadro de imagen ni logo).
+2. **Páginas Dedicadas con FOTO REAL DEL PRODUCTO (`/producto/<slug>/`):**
+   Para que WhatsApp muestre la **foto auténtica de la pieza** con su precio y descripción exacta al compartir:
+   - Se crearon páginas estáticas dedicadas en el directorio `/producto/<slug>/` (ej. `/producto/monedero-calato/`).
+   - Cada página contiene etiquetas `og:image` apuntando a la foto real del producto en `assets/img/`, su título y precio.
+   - Cuenta con una redirección automática en 0ms (`window.location.replace` y `<meta http-equiv="refresh">`) que lleva al visitante a `/?producto=<slug>` abriendo de inmediato el modal del producto.
+   - El botón oficial de compartir en la tienda genera estos enlaces canónicos:
+     `https://jhonparedes-pyp.github.io/CalatoLeathers/producto/monedero-calato/`
+
 - **Compatibilidad con múltiples formatos en `getSharedProduct()`:
   La función detecta de manera inteligente cualquiera de los siguientes formatos:
-  1. `?producto=monedero-calato` (Nombre o slug del producto)
-  2. `?monedero=calato` o `?billetera=bifold` (Pares clave=valor intuitivos)
-  3. `?producto=6` o `?id=6` (Retrocompatibilidad total con enlaces numéricos)
-  4. `#monedero-calato` o `#producto-6` (Hashes en la URL)
-- **Deep Linking y Apertura Automática:**
-  Al abrirse cualquiera de estos enlaces, `checkSharedProductUrl()`:
-  1. Si el producto pertenece a otra categoría, restablece el filtro a 'todos' para que el producto exista en el DOM.
-  2. Invoca de inmediato `openProductModal(product.id)` para mostrar la ficha completa del producto en primer plano.
-  3. Realiza un scroll suave (`scrollIntoView`) hasta centrar la tarjeta y activa un resplandor dorado (`highlight-shared`) para identificar la pieza.
+  1. `/producto/monedero-calato/` (Enlace con foto real)
+  2. `?producto=monedero-calato` (Nombre o slug del producto, vista solo texto)
+  3. `?monedero=calato` o `?billetera=bifold` (Pares clave=valor intuitivos)
+  4. `?producto=6` o `?id=6` (Retrocompatibilidad total con enlaces numéricos)
+  5. `#monedero-calato` o `#producto-6` (Hashes en la URL)
+
+- **Script de Generación Automática:**
+  Si agregas nuevos productos a `PRODUCTS_DATA`, ejecuta:
+  ```bash
+  node scripts/generate-product-pages.js
+  ```
+  Esto regenerará todas las páginas de `/producto/` al instante.
 
 ---
 

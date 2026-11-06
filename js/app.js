@@ -541,10 +541,15 @@ function shareProduct(productId, event) {
   if (!product) return;
 
   const origin = window.location.origin;
-  const path = window.location.pathname;
-  // Genera URL con nombre amigable (slug): ?producto=monedero-calato
+  let basePath = window.location.pathname;
+  if (!basePath.endsWith('/')) {
+    basePath = basePath.substring(0, basePath.lastIndexOf('/') + 1);
+  }
+  basePath = basePath.replace(/\/producto\/[^\/]*\/?$/, '/');
+
+  // Enlace canónico dedicado: WhatsApp mostrará la foto real del producto
   const productKey = product.slug || product.id;
-  const shareUrl = `${origin}${path}?producto=${productKey}`;
+  const shareUrl = `${origin}${basePath}producto/${productKey}/`;
   
   const shareTitle = `${product.name} • ${STORE_CONFIG.storeName}`;
   const shareText = `Descubre esta pieza de cuero vacuno legítimo hecha 100% a mano por ${STORE_CONFIG.artisanName}: ${product.name} (${STORE_CONFIG.formatPrice(product.price)}).`;
