@@ -15,10 +15,11 @@ const STORE_CONFIG = {
   }
 };
 
-/* Catálogo Oficial - Fotos 100% Originales y Paleta de Confección */
+/* Catálogo Oficial - Fotos 100% Originales y Enlaces Amigables (slug) */
 const PRODUCTS_DATA = [
   {
     id: 1,
+    slug: "billetera-bifold-broche",
     name: "Billetera Bifold Compacta con Solapa y Broche",
     category: "billeteras",
     categoryLabel: "Billeteras de Hombre",
@@ -72,6 +73,7 @@ const PRODUCTS_DATA = [
   },
   {
     id: 2,
+    slug: "billetera-clasica-negra",
     name: "Billetera Clásica Bifold Cuero Negro",
     category: "billeteras",
     categoryLabel: "Billeteras de Hombre",
@@ -125,6 +127,7 @@ const PRODUCTS_DATA = [
   },
   {
     id: 3,
+    slug: "tarjetero-vertical",
     name: "Tarjetero Bifold Vertical Minimalista",
     category: "tarjeteros",
     categoryLabel: "Tarjeteros de Cuero",
@@ -176,6 +179,7 @@ const PRODUCTS_DATA = [
   },
   {
     id: 4,
+    slug: "tarjetero-horizontal",
     name: "Tarjetero Bifold Horizontal Clásico",
     category: "tarjeteros",
     categoryLabel: "Tarjeteros de Cuero",
@@ -229,6 +233,7 @@ const PRODUCTS_DATA = [
   },
   {
     id: 5,
+    slug: "billetera-mujer-monedero",
     name: "Billetera Trifold para Mujer con Monedero",
     category: "billeteras",
     categoryLabel: "Billeteras de Mujer",
@@ -282,6 +287,7 @@ const PRODUCTS_DATA = [
   },
   {
     id: 6,
+    slug: "monedero-calato",
     name: "Monedero Calato",
     category: "monederos",
     categoryLabel: "Monederos de Cuero",

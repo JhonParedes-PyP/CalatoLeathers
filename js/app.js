@@ -542,8 +542,9 @@ function shareProduct(productId, event) {
 
   const origin = window.location.origin;
   const path = window.location.pathname;
-  // Genera URL con query param y hash para máxima compatibilidad
-  const shareUrl = `${origin}${path}?producto=${product.id}#producto-${product.id}`;
+  // Genera URL con nombre amigable (slug): ?producto=monedero-calato
+  const productKey = product.slug || product.id;
+  const shareUrl = `${origin}${path}?producto=${productKey}`;
   
   const shareTitle = `${product.name} • ${STORE_CONFIG.storeName}`;
   const shareText = `Descubre esta pieza de cuero vacuno legítimo hecha 100% a mano por ${STORE_CONFIG.artisanName}: ${product.name} (${STORE_CONFIG.formatPrice(product.price)}).`;
@@ -605,35 +606,49 @@ function showToast(message, icon = 'fa-solid fa-check') {
 }
 
 // ----------------------------------------------------
-// DETECCIÓN ROBUSTA DE PRODUCTO EN LA URL
+// DETECCIÓN ROBUSTA DE PRODUCTO EN LA URL (SLUGS Y PARÁMETROS)
 // ----------------------------------------------------
-function getSharedProductId() {
+function getSharedProduct() {
   try {
-    // 1. Revisar query parameters: ?producto=6, ?id=6, ?p=6
     const urlParams = new URLSearchParams(window.location.search);
-    const fromParam = urlParams.get('producto') || urlParams.get('id') || urlParams.get('p');
-    if (fromParam) {
-      const parsed = parseInt(fromParam, 10);
-      if (!isNaN(parsed) && parsed > 0) return parsed;
-    }
-
-    // 2. Revisar hash: #producto-6, #producto6, #p6, #6
-    const hash = window.location.hash || '';
-    const hashMatch = hash.match(/\d+/);
-    if (hashMatch) {
-      const parsed = parseInt(hashMatch[0], 10);
-      if (!isNaN(parsed) && parsed > 0) return parsed;
-    }
-
-    // 3. Regex de respaldo en toda la URL (útil si hay redirecciones de GitHub Pages o WhatsApp)
+    const hash = (window.location.hash || '').replace(/^#/, '').toLowerCase().trim();
     const href = window.location.href || '';
-    const urlMatch = href.match(/[?&#](?:producto|id|p)=(\d+)/i);
-    if (urlMatch) {
-      const parsed = parseInt(urlMatch[1], 10);
-      if (!isNaN(parsed) && parsed > 0) return parsed;
+
+    // 1. Revisar si viene ?producto=monedero-calato o ?producto=6
+    const paramVal = (urlParams.get('producto') || urlParams.get('id') || urlParams.get('p') || '').toLowerCase().trim();
+    if (paramVal) {
+      const found = PRODUCTS_DATA.find(p => p.slug === paramVal || String(p.id) === paramVal);
+      if (found) return found;
+    }
+
+    // 2. Revisar si viene en formato ?monedero=calato o ?billetera=bifold
+    for (const [key, val] of urlParams.entries()) {
+      const combined = `${key}-${val}`.toLowerCase().trim();
+      const foundCombined = PRODUCTS_DATA.find(p => p.slug === combined || (p.slug && p.slug.includes(combined)));
+      if (foundCombined) return foundCombined;
+      
+      const foundKey = PRODUCTS_DATA.find(p => p.slug === key.toLowerCase() || (p.slug && p.slug.includes(key.toLowerCase())));
+      if (foundKey) return foundKey;
+
+      const foundVal = PRODUCTS_DATA.find(p => p.slug === val.toLowerCase() || (p.slug && p.slug.includes(val.toLowerCase())));
+      if (foundVal) return foundVal;
+    }
+
+    // 3. Revisar el hash de la URL: #monedero-calato o #producto-6
+    if (hash) {
+      const cleanHash = hash.replace('producto-', '');
+      const foundHash = PRODUCTS_DATA.find(p => p.slug === cleanHash || p.slug === hash || String(p.id) === cleanHash);
+      if (foundHash) return foundHash;
+    }
+
+    // 4. Búsqueda en la URL completa (fallback)
+    for (const p of PRODUCTS_DATA) {
+      if (p.slug && href.toLowerCase().includes(p.slug)) {
+        return p;
+      }
     }
   } catch (e) {
-    console.error('Error parseando URL compartida:', e);
+    console.error('Error detectando producto compartido:', e);
   }
   return null;
 }
@@ -643,10 +658,7 @@ let hasHandledSharedUrl = false;
 function checkSharedProductUrl() {
   if (hasHandledSharedUrl) return;
 
-  const pId = getSharedProductId();
-  if (!pId) return;
-
-  const product = PRODUCTS_DATA.find(p => p.id === pId);
+  const product = getSharedProduct();
   if (!product) return;
 
   hasHandledSharedUrl = true;
@@ -661,11 +673,11 @@ function checkSharedProductUrl() {
   }
 
   // Abrir de inmediato el modal del producto
-  openProductModal(pId);
+  openProductModal(product.id);
 
   // Desplazar suavemente hasta centrar el producto en la página
   setTimeout(() => {
-    const card = document.querySelector(`.product-card[data-id="${pId}"]`);
+    const card = document.querySelector(`.product-card[data-id="${product.id}"]`);
     if (card) {
       card.scrollIntoView({ behavior: 'smooth', block: 'center' });
       card.classList.add('highlight-shared');
