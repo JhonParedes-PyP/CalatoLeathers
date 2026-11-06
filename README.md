@@ -40,7 +40,7 @@ En el mismo archivo `js/products.js`, encontrarás la lista `PRODUCTS_DATA`. Cad
 {
   id: 1,
   name: "Nombre del Producto",
-  category: "billeteras", // opciones: 'billeteras', 'cinturones', 'bolsos', 'accesorios'
+  category: "billeteras", // opciones: 'billeteras', 'tarjeteros', 'monederos'
   categoryLabel: "Billeteras & Tarjeteros",
   price: 85000,
   tag: "Más Vendido", // o "Nuevo", "Personalizable", etc.
@@ -61,7 +61,7 @@ Las imágenes que subiste ya están integradas:
 - **Foto del artesano en el taller:** Guardada en `assets/img/artesano-jhon.png` (visible en la sección "Sobre Nosotros").
 
 Para agregar fotos de tus productos:
-Crea o usa la carpeta `assets/img/` y guarda las fotos de tus billeteras, cinturones, etc. Luego en `js/products.js` actualiza:
+Crea o usa la carpeta `assets/img/` y guarda las fotos de tus billeteras, tarjeteros, monederos, etc. Luego en `js/products.js` actualiza:
 ```javascript
 image: "assets/img/mi-billetera.jpg",
 ```
@@ -71,7 +71,7 @@ image: "assets/img/mi-billetera.jpg",
 ## ✨ Características Principales
 
 - **Diseño 100% Adaptable (Responsive):** Se ve impecable en teléfonos móviles, tablets y computadoras.
-- **Catálogo Interactivo con Filtros:** Filtra por categorías (Billeteras, Cinturones, Bolsos, Accesorios) y buscador en tiempo real.
+- **Catálogo Interactivo con Filtros:** Filtra por categorías (Billeteras, Tarjeteros, Monederos) y buscador en tiempo real.
 - **Modal de Detalle:** Muestra fotos grandes, especificaciones técnicas y beneficios del producto.
 - **Carrito de Compras Integrado:** Permite al cliente sumar varios productos y cambiar cantidades.
 - **Checkout Automático a WhatsApp:** Al hacer clic en "Pedir", genera un mensaje automático y estructurado con el nombre de los productos, cantidades y precio total listo para enviar a tu chat.
