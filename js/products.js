@@ -37,6 +37,7 @@ const PRODUCTS_DATA = [
     originalPrice: 118,
     price: 70.80,
     discountPercent: 40,
+    salesCount: 4,
     image: "assets/img/billetera-bifold-broche-frontal.png",
     variants: [
       {
@@ -93,6 +94,7 @@ const PRODUCTS_DATA = [
     originalPrice: 89,
     price: 53.40,
     discountPercent: 40,
+    salesCount: 3,
     image: "assets/img/billetera-negra-calato-exterior.jpg",
     variants: [
       {
@@ -149,6 +151,7 @@ const PRODUCTS_DATA = [
     originalPrice: 50,
     price: 30,
     discountPercent: 40,
+    salesCount: 4,
     image: "assets/img/tarjetero-vertical-cognac.jpg",
     variants: [
       {
@@ -203,6 +206,7 @@ const PRODUCTS_DATA = [
     originalPrice: 50,
     price: 30,
     discountPercent: 40,
+    salesCount: 4,
     image: "assets/img/tarjetero-horizontal-interior.jpg",
     variants: [
       {
@@ -259,6 +263,7 @@ const PRODUCTS_DATA = [
     originalPrice: 130,
     price: 78,
     discountPercent: 40,
+    salesCount: 1,
     image: "assets/img/billetera-mujer-monedero-cerrada.jpg",
     variants: [
       {
@@ -315,6 +320,7 @@ const PRODUCTS_DATA = [
     originalPrice: 18,
     price: 10.80,
     discountPercent: 40,
+    salesCount: 8,
     image: "assets/img/monedero-calato-1.jpg",
     variants: [
       {
@@ -371,6 +377,7 @@ const PRODUCTS_DATA = [
     originalPrice: 65,
     price: 39,
     discountPercent: 40,
+    salesCount: 3,
     image: "assets/img/billetera-minimalista-solapa-1.jpeg",
     variants: [
       {

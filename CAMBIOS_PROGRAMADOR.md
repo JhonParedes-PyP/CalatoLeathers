@@ -250,3 +250,24 @@ Se implementó una estrategia de anclaje de precios (Price Anchoring) en todo el
   2. `negro`: Negro Azabache • Hilo Negro o Crema
 - **Fotos oficiales:** `billetera-minimalista-solapa-1.jpeg` y `billetera-minimalista-solapa-2.jpeg`
 - **Landing dedicada:** `/producto/billetera-minimalista-solapa/` con Open Graph completo para compartir en WhatsApp.
+
+---
+
+## 10. Estrategia de Prueba Social: Contador de Ventas por Producto
+
+Como estrategia de ventas basada en prueba social (Social Proof) y sensación de alta demanda / escasez:
+1. **Datos de Ventas en `PRODUCTS_DATA`:**
+   - Cada producto cuenta con su propiedad `salesCount`:
+     - Billetera Minimalista con Solapa: `salesCount: 3` (3 vendidos)
+     - Billetera Bifold con Broche: `salesCount: 4` (4 vendidos)
+     - Billetera Clásica Cuero Negro: `salesCount: 3` (3 vendidos)
+     - Tarjetero Vertical Minimalista: `salesCount: 4` (4 vendidos)
+     - Tarjetero Horizontal Clásico: `salesCount: 4` (4 vendidos)
+     - Billetera Trifold para Mujer con Monedero: `salesCount: 1` (1 vendido)
+     - Monedero Calato: `salesCount: 8` (8 vendidos)
+2. **Visualización en Catálogo:**
+   - En la cabecera de la tarjeta (`.product-header-meta`), a un costado de la categoría del producto, se ubica la pastilla destacada `.product-sales-badge`:
+     `🔥 X vendidos` (o `1 vendido` en singular) con icono animado de llama.
+3. **Visualización en el Modal:**
+   - En la cabecera del modal junto a la categoría: `.modal-sales-badge`.
+   - Dentro del bloque de precios: franja informativa destacando la alta demanda del producto.

@@ -5,7 +5,6 @@ const BASE_URL = 'https://jhonparedes-pyp.github.io/CalatoLeathers';
 
 // Cargar y evaluar js/products.js exponiendo las constantes
 let productsCode = fs.readFileSync(path.join(__dirname, '..', 'js', 'products.js'), 'utf8');
-// Exponer PRODUCTS_DATA
 productsCode += '\nglobalThis.__EXTRACTED_PRODUCTS = PRODUCTS_DATA;\n';
 
 const vm = require('vm');
@@ -28,19 +27,21 @@ function buildProductHtml(p, relativeToRoot) {
     ? `Oferta: S/ ${p.price} (Antes S/ ${p.originalPrice} - 40% DSCTO)`
     : `Precio: S/ ${p.price}`;
 
+  const salesText = p.salesCount ? ` • 🔥 ${p.salesCount} ${p.salesCount === 1 ? 'vendido' : 'vendidos'}` : '';
+
   return `<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${p.name} | Calato Leathers</title>
-  <meta name="description" content="${p.shortDesc} • ${priceText}">
+  <meta name="description" content="${p.shortDesc} • ${priceText}${salesText}">
 
   <!-- Open Graph para WhatsApp y Redes Sociales con la FOTO REAL DEL PRODUCTO -->
   <meta property="og:type" content="product">
   <meta property="og:site_name" content="Calato Leathers">
   <meta property="og:title" content="${p.name} • Calato Leathers">
-  <meta property="og:description" content="${p.shortDesc} • ${priceText}. Cuero 100% genuino hecho a mano por Jhon Paredes.">
+  <meta property="og:description" content="${p.shortDesc} • ${priceText}${salesText}. Cuero 100% genuino hecho a mano por Jhon Paredes.">
   <meta property="og:image" content="${imageUrl}">
   <meta property="og:image:secure_url" content="${imageUrl}">
   <meta property="og:image:type" content="${imageType}">
@@ -50,7 +51,7 @@ function buildProductHtml(p, relativeToRoot) {
   <!-- Twitter Cards -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${p.name} • Calato Leathers">
-  <meta name="twitter:description" content="${p.shortDesc} • ${priceText}">
+  <meta name="twitter:description" content="${p.shortDesc} • ${priceText}${salesText}">
   <meta name="twitter:image" content="${imageUrl}">
 
   <link rel="icon" type="image/jpeg" href="${BASE_URL}/assets/img/logo-calato.jpg">
@@ -95,6 +96,18 @@ function buildProductHtml(p, relativeToRoot) {
       padding: 4px 10px;
       border-radius: 20px;
       letter-spacing: 0.5px;
+    }
+    .sales-badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: #FFF5EB;
+      color: #B84A1C;
+      border: 1px solid rgba(184, 74, 28, 0.25);
+      font-weight: 700;
+      font-size: 0.75rem;
+      padding: 3px 9px;
+      border-radius: 20px;
     }
     img {
       max-width: 100%;
@@ -148,6 +161,7 @@ function buildProductHtml(p, relativeToRoot) {
 <body>
   <div class="card">
     ${p.originalPrice && p.originalPrice > p.price ? '<span class="badge">-40% DSCTO</span>' : ''}
+    ${p.salesCount ? `<span class="sales-badge">🔥 ${p.salesCount} ${p.salesCount === 1 ? 'vendido' : 'vendidos'}</span>` : ''}
     <img src="${imageUrl}" alt="${p.name}">
     <h1>${p.name}</h1>
     <div class="pricing">
@@ -175,4 +189,4 @@ products.forEach(p => {
   fs.writeFileSync(path.join(prodDir, `${p.slug}.html`), buildProductHtml(p, '../'), 'utf8');
 });
 
-console.log(`Páginas generadas con éxito para ${products.length} productos en /producto/`);
+console.log(`Páginas generadas con éxito para ${products.length} productos en /producto/ con contador de ventas`);

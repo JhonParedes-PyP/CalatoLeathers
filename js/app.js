@@ -227,7 +227,14 @@ function renderProducts() {
         </div>
 
         <div class="product-body">
-          <span class="product-category">${product.categoryLabel}</span>
+          <div class="product-header-meta">
+            <span class="product-category">${product.categoryLabel}</span>
+            ${product.salesCount ? `
+              <span class="product-sales-badge" title="${product.salesCount} ${product.salesCount === 1 ? 'unidad vendida' : 'unidades vendidas'}">
+                <i class="fa-solid fa-fire"></i> ${product.salesCount} ${product.salesCount === 1 ? 'vendido' : 'vendidos'}
+              </span>
+            ` : ''}
+          </div>
           <h3 class="product-name">${product.name}</h3>
           <p class="product-desc">${product.shortDesc}</p>
           ${variantsHtml}
@@ -379,7 +386,14 @@ function openProductModal(productId) {
         ${galleryThumbs}
       </div>
       <div class="modal-info-col">
-        <span class="modal-badge">${product.categoryLabel}</span>
+        <div class="modal-meta-row">
+          <span class="modal-badge">${product.categoryLabel}</span>
+          ${product.salesCount ? `
+            <span class="modal-sales-badge">
+              <i class="fa-solid fa-fire"></i> ${product.salesCount} ${product.salesCount === 1 ? 'vendido' : 'vendidos'}
+            </span>
+          ` : ''}
+        </div>
         <h2 class="modal-title">${product.name}</h2>
         ${product.originalPrice && product.originalPrice > product.price ? `
           <div class="modal-price-box">
@@ -391,6 +405,12 @@ function openProductModal(productId) {
               <span class="modal-discount-pill"><i class="fa-solid fa-tag"></i> ${product.discountPercent || 40}% DESCUENTO</span>
               <span class="modal-savings-text">¡Ahorras ${STORE_CONFIG.formatPrice(product.originalPrice - product.price)}!</span>
             </div>
+            ${product.salesCount ? `
+              <div class="modal-sales-demand">
+                <i class="fa-solid fa-arrow-trend-up"></i>
+                <span><strong>${product.salesCount} ${product.salesCount === 1 ? 'unidad vendida' : 'unidades vendidas'}</strong> • Pieza artesanal de alta demanda</span>
+              </div>
+            ` : ''}
           </div>
         ` : `
           <div class="modal-price">${STORE_CONFIG.formatPrice(product.price)}</div>
