@@ -219,3 +219,34 @@ Estoy interesado en adquirir la siguiente pieza artesanal de Jhon Paredes:
 - **Codificación de Archivos:** Guarda siempre los archivos `.html`, `.css` y `.js` en **UTF-8 sin BOM** para evitar corrupción de caracteres especiales en español.
 - **Precios:** Para modificar precios rápidamente, basta con editar el campo `price` en `js/products.js`. La función `STORE_CONFIG.formatPrice()` añade automáticamente el símbolo de moneda (`S/`).
 - **Caché en Navegadores:** Tras subir cambios con `git push`, recuerda recargar con `Ctrl + F5` (o en incógnito en móvil) para forzar la recarga de scripts actualizados.
+
+---
+
+## 8. Estrategia de Marketing: Campaña con 40% de Descuento
+
+Se implementó una estrategia de anclaje de precios (Price Anchoring) en todo el catálogo:
+1. **Precio Original y Precio Promocional:**
+   - Cada producto en `PRODUCTS_DATA` almacena:
+     - `originalPrice`: Precio regular antes del descuento (ej. S/ 65, S/ 118, S/ 89).
+     - `price`: Precio final con 40% de descuento (ej. S/ 39, S/ 70.80, S/ 53.40).
+     - `discountPercent`: 40.
+2. **Visualización en Catálogo:**
+   - En cada tarjeta de producto: se muestra el precio promocional en tipografía destacada (`.product-price-current`), el precio original tachado en rojo suave (`.product-price-original`) y la etiqueta verde "Ahorras S/ XX.XX".
+   - En la miniatura de la foto: badge rojo animado con `-40% DSCTO`.
+3. **Visualización en Modal Detallado:**
+   - Recuadro de precios `.modal-price-box` con precio de oferta, precio original tachado, pastilla `40% DESCUENTO` y el monto exacto de ahorro.
+4. **Mensaje de Pedido en WhatsApp:**
+   - Al pulsar "Pedir por WhatsApp", el mensaje generado automáticamente incluye el precio con el formato nativo tachado de WhatsApp:
+     `💰 *Precio Promocional (40% OFF):* S/ 39.00 ~(S/ 65.00)~\n🎉 *Ahorras:* S/ 26.00`
+
+---
+
+## 9. Nuevo Producto: Billetera Minimalista con Solapa (ID 7)
+- **Slug:** `billetera-minimalista-solapa`
+- **Precio Original:** S/ 65.00
+- **Precio Promocional (-40%):** S/ 39.00 (Ahorro de S/ 26.00)
+- **Colores exclusivos (2 disponibles):**
+  1. `marron-oscuro`: Marrón Oscuro (Foto Original) • Hilo Café / Tostado
+  2. `negro`: Negro Azabache • Hilo Negro o Crema
+- **Fotos oficiales:** `billetera-minimalista-solapa-1.jpeg` y `billetera-minimalista-solapa-2.jpeg`
+- **Landing dedicada:** `/producto/billetera-minimalista-solapa/` con Open Graph completo para compartir en WhatsApp.

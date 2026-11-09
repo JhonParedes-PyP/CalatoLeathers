@@ -9,9 +9,20 @@ const STORE_CONFIG = {
   // Número oficial de WhatsApp de Jhon Paredes
   whatsappNumber: "51915222623",
   currency: "S/",
-  // Función para formatear el precio en Soles (ej: 120 -> S/ 120.00)
+  // Estrategia de Marketing: Campaña con 40% de descuento en todo el catálogo
+  discount: {
+    active: true,
+    percent: 40,
+    label: "40% DSCTO"
+  },
+  // Función para formatear el precio en Soles (ej: 39 -> S/ 39, 70.8 -> S/ 70.80)
   formatPrice: function(price) {
-    return this.currency + " " + price.toLocaleString("es-PE", { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+    if (typeof price !== 'number') return price;
+    const hasDecimals = !Number.isInteger(price);
+    return this.currency + " " + price.toLocaleString("es-PE", { 
+      minimumFractionDigits: hasDecimals ? 2 : 0, 
+      maximumFractionDigits: 2 
+    });
   }
 };
 
@@ -23,7 +34,9 @@ const PRODUCTS_DATA = [
     name: "Billetera Bifold Compacta con Solapa y Broche",
     category: "billeteras",
     categoryLabel: "Billeteras de Hombre",
-    price: 118,
+    originalPrice: 118,
+    price: 70.80,
+    discountPercent: 40,
     image: "assets/img/billetera-bifold-broche-frontal.png",
     variants: [
       {
@@ -77,7 +90,9 @@ const PRODUCTS_DATA = [
     name: "Billetera Clásica Bifold Cuero Negro",
     category: "billeteras",
     categoryLabel: "Billeteras de Hombre",
-    price: 89,
+    originalPrice: 89,
+    price: 53.40,
+    discountPercent: 40,
     image: "assets/img/billetera-negra-calato-exterior.jpg",
     variants: [
       {
@@ -131,7 +146,9 @@ const PRODUCTS_DATA = [
     name: "Tarjetero Bifold Vertical Minimalista",
     category: "tarjeteros",
     categoryLabel: "Tarjeteros de Cuero",
-    price: 50,
+    originalPrice: 50,
+    price: 30,
+    discountPercent: 40,
     image: "assets/img/tarjetero-vertical-cognac.jpg",
     variants: [
       {
@@ -183,7 +200,9 @@ const PRODUCTS_DATA = [
     name: "Tarjetero Bifold Horizontal Clásico",
     category: "tarjeteros",
     categoryLabel: "Tarjeteros de Cuero",
-    price: 50,
+    originalPrice: 50,
+    price: 30,
+    discountPercent: 40,
     image: "assets/img/tarjetero-horizontal-interior.jpg",
     variants: [
       {
@@ -237,7 +256,9 @@ const PRODUCTS_DATA = [
     name: "Billetera Trifold para Mujer con Monedero",
     category: "billeteras",
     categoryLabel: "Billeteras de Mujer",
-    price: 130,
+    originalPrice: 130,
+    price: 78,
+    discountPercent: 40,
     image: "assets/img/billetera-mujer-monedero-cerrada.jpg",
     variants: [
       {
@@ -291,7 +312,9 @@ const PRODUCTS_DATA = [
     name: "Monedero Calato",
     category: "monederos",
     categoryLabel: "Monederos de Cuero",
-    price: 18,
+    originalPrice: 18,
+    price: 10.80,
+    discountPercent: 40,
     image: "assets/img/monedero-calato-1.jpg",
     variants: [
       {
@@ -336,6 +359,48 @@ const PRODUCTS_DATA = [
       "Costura artesanal lateral a dos agujas con hilo encerado de alta resistencia",
       "Cantos biselados, pulidos y sellados a mano",
       "Tamaño de bolsillo ultracompacto para monedas, billetes doblados o llaves",
+      "Garantía de confección artesanal directa de taller Calato Leathers"
+    ]
+  },
+  {
+    id: 7,
+    slug: "billetera-minimalista-solapa",
+    name: "Billetera Minimalista con Solapa",
+    category: "billeteras",
+    categoryLabel: "Billeteras de Hombre",
+    originalPrice: 65,
+    price: 39,
+    discountPercent: 40,
+    image: "assets/img/billetera-minimalista-solapa-1.jpeg",
+    variants: [
+      {
+        id: "marron-oscuro",
+        name: "Marrón Oscuro (Foto Original)",
+        hex: "#3D2314",
+        thread: "Hilo Café / Tostado"
+      },
+      {
+        id: "negro",
+        name: "Negro Azabache",
+        hex: "#1D1A18",
+        thread: "Hilo Negro o Crema"
+      }
+    ],
+    tag: "100% Hecha a Mano • Jhon Paredes",
+    gallery: [
+      "assets/img/billetera-minimalista-solapa-1.jpeg",
+      "assets/img/billetera-minimalista-solapa-2.jpeg"
+    ],
+    shortDesc: "Diseño minimalista compacto con solapa envolvente en cuero vacuno legítimo marrón oscuro. Elaborada 100% a mano por Jhon Paredes • El Artesano.",
+    fullDesc: "Elegancia minimalista y practicidad en su máxima expresión. Diseñada y elaborada íntegramente a mano por el artesano Jhon Paredes en cuero vacuno legítimo de primera calidad en tono marrón oscuro profundo. Su solapa envolvente protege tus pertenencias manteniendo un perfil ultradelgado y ligero, ideal para llevar en el bolsillo delantero sin bulto. Capacidad optimizada para tarjetas y billetes doblados, con costura artesanal de alta durabilidad.",
+    specs: [
+      "Elaborada 100% a mano por Jhon Paredes • El Artesano",
+      "Cuero vacuno genuino de primera flor en tono marrón oscuro profundo",
+      "Solo 2 colores exclusivos disponibles: Marrón Oscuro original y Negro azabache",
+      "Solapa envolvente de protección y perfil ultra-slim de bolsillo",
+      "Capacidad recomendada para 4 a 6 tarjetas y billetes doblados",
+      "Costura artesanal tradicional a dos agujas con hilo encerado resistente",
+      "Bordes biselados, pulidos y sellados a mano con ceras naturales",
       "Garantía de confección artesanal directa de taller Calato Leathers"
     ]
   }

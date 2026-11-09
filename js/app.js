@@ -197,11 +197,27 @@ function renderProducts() {
       `;
     }
 
+    const hasDiscount = product.originalPrice && product.originalPrice > product.price;
+    const priceHtml = hasDiscount ? `
+      <div class="product-pricing">
+        <div class="product-price-row">
+          <span class="product-price-current">${STORE_CONFIG.formatPrice(product.price)}</span>
+          <span class="product-price-original">${STORE_CONFIG.formatPrice(product.originalPrice)}</span>
+        </div>
+        <span class="product-discount-label">Ahorras ${STORE_CONFIG.formatPrice(product.originalPrice - product.price)}</span>
+      </div>
+    ` : `
+      <span class="product-price">${STORE_CONFIG.formatPrice(product.price)}</span>
+    `;
+
     return `
       <div class="product-card" data-id="${product.id}">
         <div class="product-thumb">
           <img id="productImg-${product.id}" src="${product.image}" alt="${product.name}" loading="lazy">
-          ${product.tag ? `<span class="product-tag">${product.tag}</span>` : ''}
+          <div class="product-badges-group">
+            ${hasDiscount ? `<span class="badge-promo-discount"><i class="fa-solid fa-tag"></i> -${product.discountPercent || 40}%</span>` : ''}
+            ${product.tag ? `<span class="product-tag">${product.tag}</span>` : ''}
+          </div>
           <button class="product-share-btn" onclick="shareProduct(${product.id}, event)" title="Compartir este producto" aria-label="Compartir producto">
             <i class="fa-solid fa-share-nodes"></i>
           </button>
@@ -217,7 +233,7 @@ function renderProducts() {
           ${variantsHtml}
 
           <div class="product-footer">
-            <span class="product-price">${STORE_CONFIG.formatPrice(product.price)}</span>
+            ${priceHtml}
             <div class="product-actions-group">
               <button class="btn-share-icon" onclick="shareProduct(${product.id}, event)" title="Compartir este producto" aria-label="Compartir">
                 <i class="fa-solid fa-share-nodes"></i>
@@ -365,7 +381,20 @@ function openProductModal(productId) {
       <div class="modal-info-col">
         <span class="modal-badge">${product.categoryLabel}</span>
         <h2 class="modal-title">${product.name}</h2>
-        <div class="modal-price">${STORE_CONFIG.formatPrice(product.price)}</div>
+        ${product.originalPrice && product.originalPrice > product.price ? `
+          <div class="modal-price-box">
+            <div class="modal-price-row">
+              <span class="modal-price-current">${STORE_CONFIG.formatPrice(product.price)}</span>
+              <span class="modal-price-original">${STORE_CONFIG.formatPrice(product.originalPrice)}</span>
+            </div>
+            <div class="modal-discount-pill-row">
+              <span class="modal-discount-pill"><i class="fa-solid fa-tag"></i> ${product.discountPercent || 40}% DESCUENTO</span>
+              <span class="modal-savings-text">¡Ahorras ${STORE_CONFIG.formatPrice(product.originalPrice - product.price)}!</span>
+            </div>
+          </div>
+        ` : `
+          <div class="modal-price">${STORE_CONFIG.formatPrice(product.price)}</div>
+        `}
         <p class="modal-description">${product.fullDesc || product.shortDesc}</p>
         ${variantsModalHtml}
         ${specsList}
@@ -517,11 +546,19 @@ function orderSingleProductWhatsApp(productId) {
     }
   }
 
+  let priceText = '';
+  if (product.originalPrice && product.originalPrice > product.price) {
+    priceText = `💰 *Precio Promocional (40% OFF):* ${STORE_CONFIG.formatPrice(product.price)} ~(${STORE_CONFIG.formatPrice(product.originalPrice)})~\n` +
+                `🎉 *Ahorras:* ${STORE_CONFIG.formatPrice(product.originalPrice - product.price)}\n\n`;
+  } else {
+    priceText = `💰 *Precio:* ${STORE_CONFIG.formatPrice(product.price)}\n\n`;
+  }
+
   const text = `¡Hola ${STORE_CONFIG.storeName}! 👋\n\n` +
                `Estoy interesado en adquirir la siguiente pieza artesanal de Jhon Paredes:\n` +
                `🔸 *${product.name}*\n` +
                (variantDetails ? variantDetails : '') +
-               `💰 *Precio:* ${STORE_CONFIG.formatPrice(product.price)}\n\n` +
+               priceText +
                `¿Tienen disponibilidad y cuáles son los medios de pago para coordinar el envío? ¡Muchas gracias!`;
 
   const url = `https://wa.me/${STORE_CONFIG.whatsappNumber}?text=${encodeURIComponent(text)}`;
@@ -551,8 +588,11 @@ function shareProduct(productId, event) {
   const productKey = product.slug || product.id;
   const shareUrl = `${origin}${basePath}producto/${productKey}/`;
   
+  const sharePrice = product.originalPrice && product.originalPrice > product.price
+    ? `Oferta: ${STORE_CONFIG.formatPrice(product.price)} (Antes ${STORE_CONFIG.formatPrice(product.originalPrice)} • 40% OFF)`
+    : `${STORE_CONFIG.formatPrice(product.price)}`;
   const shareTitle = `${product.name} • ${STORE_CONFIG.storeName}`;
-  const shareText = `Descubre esta pieza de cuero vacuno legítimo hecha 100% a mano por ${STORE_CONFIG.artisanName}: ${product.name} (${STORE_CONFIG.formatPrice(product.price)}).`;
+  const shareText = `Descubre esta pieza de cuero vacuno legítimo hecha 100% a mano por ${STORE_CONFIG.artisanName}: ${product.name} (${sharePrice}).`;
 
   if (navigator.share) {
     navigator.share({

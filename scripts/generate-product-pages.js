@@ -24,19 +24,23 @@ function buildProductHtml(p, relativeToRoot) {
   const redirectTarget = `${relativeToRoot}?producto=${p.slug}`;
   const imageType = p.image.endsWith('.png') ? 'image/png' : 'image/jpeg';
 
+  const priceText = p.originalPrice && p.originalPrice > p.price
+    ? `Oferta: S/ ${p.price} (Antes S/ ${p.originalPrice} - 40% DSCTO)`
+    : `Precio: S/ ${p.price}`;
+
   return `<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${p.name} | Calato Leathers</title>
-  <meta name="description" content="${p.shortDesc} • Precio: S/ ${p.price}">
+  <meta name="description" content="${p.shortDesc} • ${priceText}">
 
   <!-- Open Graph para WhatsApp y Redes Sociales con la FOTO REAL DEL PRODUCTO -->
   <meta property="og:type" content="product">
   <meta property="og:site_name" content="Calato Leathers">
   <meta property="og:title" content="${p.name} • Calato Leathers">
-  <meta property="og:description" content="${p.shortDesc} • Precio: S/ ${p.price}. Cuero 100% genuino hecho a mano por Jhon Paredes.">
+  <meta property="og:description" content="${p.shortDesc} • ${priceText}. Cuero 100% genuino hecho a mano por Jhon Paredes.">
   <meta property="og:image" content="${imageUrl}">
   <meta property="og:image:secure_url" content="${imageUrl}">
   <meta property="og:image:type" content="${imageType}">
@@ -46,7 +50,7 @@ function buildProductHtml(p, relativeToRoot) {
   <!-- Twitter Cards -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${p.name} • Calato Leathers">
-  <meta name="twitter:description" content="${p.shortDesc} • Precio: S/ ${p.price}">
+  <meta name="twitter:description" content="${p.shortDesc} • ${priceText}">
   <meta name="twitter:image" content="${imageUrl}">
 
   <link rel="icon" type="image/jpeg" href="${BASE_URL}/assets/img/logo-calato.jpg">
@@ -78,6 +82,19 @@ function buildProductHtml(p, relativeToRoot) {
       max-width: 380px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.08);
       border: 1px solid #EBE5DF;
+      position: relative;
+    }
+    .badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: #B71C1C;
+      color: white;
+      font-weight: 800;
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
     }
     img {
       max-width: 100%;
@@ -95,11 +112,23 @@ function buildProductHtml(p, relativeToRoot) {
       font-size: 0.95rem;
       margin: 0 0 16px 0;
     }
-    .price {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: #A85D2A;
+    .pricing {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 10px;
       margin-bottom: 16px;
+    }
+    .price-curr {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #B84A1C;
+    }
+    .price-orig {
+      font-size: 1.1rem;
+      color: #8C827A;
+      text-decoration: line-through;
+      font-weight: 600;
     }
     .btn {
       display: inline-block;
@@ -118,9 +147,13 @@ function buildProductHtml(p, relativeToRoot) {
 </head>
 <body>
   <div class="card">
+    ${p.originalPrice && p.originalPrice > p.price ? '<span class="badge">-40% DSCTO</span>' : ''}
     <img src="${imageUrl}" alt="${p.name}">
     <h1>${p.name}</h1>
-    <div class="price">S/ ${p.price}</div>
+    <div class="pricing">
+      <span class="price-curr">S/ ${p.price}</span>
+      ${p.originalPrice && p.originalPrice > p.price ? `<span class="price-orig">S/ ${p.originalPrice}</span>` : ''}
+    </div>
     <p>${p.shortDesc}</p>
     <a class="btn" href="${redirectTarget}">Ver en Calato Leathers</a>
   </div>

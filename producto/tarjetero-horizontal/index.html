@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tarjetero Bifold Horizontal Clásico | Calato Leathers</title>
-  <meta name="description" content="Tarjetero horizontal en cuero vacuno pull-up. Ranuras semicirculares y costura perimetral artesanal a dos agujas por Jhon Paredes. • Precio: S/ 50">
+  <meta name="description" content="Tarjetero horizontal en cuero vacuno pull-up. Ranuras semicirculares y costura perimetral artesanal a dos agujas por Jhon Paredes. • Oferta: S/ 30 (Antes S/ 50 - 40% DSCTO)">
 
   <!-- Open Graph para WhatsApp y Redes Sociales con la FOTO REAL DEL PRODUCTO -->
   <meta property="og:type" content="product">
   <meta property="og:site_name" content="Calato Leathers">
   <meta property="og:title" content="Tarjetero Bifold Horizontal Clásico • Calato Leathers">
-  <meta property="og:description" content="Tarjetero horizontal en cuero vacuno pull-up. Ranuras semicirculares y costura perimetral artesanal a dos agujas por Jhon Paredes. • Precio: S/ 50. Cuero 100% genuino hecho a mano por Jhon Paredes.">
+  <meta property="og:description" content="Tarjetero horizontal en cuero vacuno pull-up. Ranuras semicirculares y costura perimetral artesanal a dos agujas por Jhon Paredes. • Oferta: S/ 30 (Antes S/ 50 - 40% DSCTO). Cuero 100% genuino hecho a mano por Jhon Paredes.">
   <meta property="og:image" content="https://jhonparedes-pyp.github.io/CalatoLeathers/assets/img/tarjetero-horizontal-interior.jpg">
   <meta property="og:image:secure_url" content="https://jhonparedes-pyp.github.io/CalatoLeathers/assets/img/tarjetero-horizontal-interior.jpg">
   <meta property="og:image:type" content="image/jpeg">
@@ -20,7 +20,7 @@
   <!-- Twitter Cards -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Tarjetero Bifold Horizontal Clásico • Calato Leathers">
-  <meta name="twitter:description" content="Tarjetero horizontal en cuero vacuno pull-up. Ranuras semicirculares y costura perimetral artesanal a dos agujas por Jhon Paredes. • Precio: S/ 50">
+  <meta name="twitter:description" content="Tarjetero horizontal en cuero vacuno pull-up. Ranuras semicirculares y costura perimetral artesanal a dos agujas por Jhon Paredes. • Oferta: S/ 30 (Antes S/ 50 - 40% DSCTO)">
   <meta name="twitter:image" content="https://jhonparedes-pyp.github.io/CalatoLeathers/assets/img/tarjetero-horizontal-interior.jpg">
 
   <link rel="icon" type="image/jpeg" href="https://jhonparedes-pyp.github.io/CalatoLeathers/assets/img/logo-calato.jpg">
@@ -52,6 +52,19 @@
       max-width: 380px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.08);
       border: 1px solid #EBE5DF;
+      position: relative;
+    }
+    .badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: #B71C1C;
+      color: white;
+      font-weight: 800;
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
     }
     img {
       max-width: 100%;
@@ -69,11 +82,23 @@
       font-size: 0.95rem;
       margin: 0 0 16px 0;
     }
-    .price {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: #A85D2A;
+    .pricing {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 10px;
       margin-bottom: 16px;
+    }
+    .price-curr {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #B84A1C;
+    }
+    .price-orig {
+      font-size: 1.1rem;
+      color: #8C827A;
+      text-decoration: line-through;
+      font-weight: 600;
     }
     .btn {
       display: inline-block;
@@ -92,9 +117,13 @@
 </head>
 <body>
   <div class="card">
+    <span class="badge">-40% DSCTO</span>
     <img src="https://jhonparedes-pyp.github.io/CalatoLeathers/assets/img/tarjetero-horizontal-interior.jpg" alt="Tarjetero Bifold Horizontal Clásico">
     <h1>Tarjetero Bifold Horizontal Clásico</h1>
-    <div class="price">S/ 50</div>
+    <div class="pricing">
+      <span class="price-curr">S/ 30</span>
+      <span class="price-orig">S/ 50</span>
+    </div>
     <p>Tarjetero horizontal en cuero vacuno pull-up. Ranuras semicirculares y costura perimetral artesanal a dos agujas por Jhon Paredes.</p>
     <a class="btn" href="../../?producto=tarjetero-horizontal">Ver en Calato Leathers</a>
   </div>
